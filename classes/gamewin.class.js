@@ -4,11 +4,11 @@ class GameWin extends MovableObject {
     height = 480;
 
     IMG_GAMEWINSCREEN = [
-        '../img/win1.png',
-        '../img/win2.png',
-        '../img/win3.png',
-        '../img/win4.png',
-        '../img/win5.png'
+        './img/win1.png',
+        './img/win2.png',
+        './img/win3.png',
+        './img/win4.png',
+        './img/win5.png'
     ];
 
     constructor(x) {

@@ -4,10 +4,10 @@ class GameOver extends MovableObject {
     height = 480;
 
     IMG_GAMEOVERSCREEN = [
-        '../img/9_intro_outro_screens/game_over/gameover!.png',
-        '../img/9_intro_outro_screens/game_over/gameover.png',
-        '../img/9_intro_outro_screens/game_over/ohnoyoulost!.png',
-        '../img/9_intro_outro_screens/game_over/youlost.png'
+        './img/9_intro_outro_screens/game_over/gameover!.png',
+        './img/9_intro_outro_screens/game_over/gameover.png',
+        './img/9_intro_outro_screens/game_over/ohnoyoulost!.png',
+        './img/9_intro_outro_screens/game_over/youlost.png'
     ];
 
     constructor(x) {
