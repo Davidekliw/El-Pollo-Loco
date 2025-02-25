@@ -134,10 +134,10 @@ class World {
                     // console.log(this.level.rewards[index].value);
                     // this.coinBar.currentLoad = this.coinBar.currentLoad + this.level.rewards[index].value
                     this.coinBar.currentLoad = this.coinBar.currentLoad + (1 / this.allCoinsInLevel) * 1000
-                    // console.log(this.coinBar.currentLoad);
+                    console.log(this.coinBar.currentLoad);
                     
                     this.coinBar.setPercentage(this.coinBar.currentLoad, "IMG_STATUSBARCOINS");
-                    // console.log(this.coinBar.currentLoad);
+                    console.log(this.coinBar.currentLoad);
                 } else {
                     console.log(`Es ist etwas anderes an Position ${index}`);
                 }

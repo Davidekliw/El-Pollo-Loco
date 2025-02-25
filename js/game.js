@@ -11,6 +11,39 @@ function init() {
 
 }
 
+function toogleFullScreen() {
+    let elem = document.querySelector("canvas");
+
+    if (!document.fullscreenElement) {
+        elem.requestFullscreen().catch((err) => {
+            alert(
+                `Error attempting to enable fullscreen mode: ${err.message} (${err.name})`,
+            );
+        });
+    } else {
+        document.exitFullscreen();
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
+        console.log("button Left was clicked");
+        keyboard.LEFT = true;
+    });
+    document.getElementById('btnLeft').addEventListener('touchend', (e) => {
+        console.log("button Left was clicked");
+        keyboard.LEFT = false;
+    });
+    document.getElementById('btnRight').addEventListener('touchstart', (e) => {
+        console.log("button Right was clicked");
+        keyboard.RIGHT = true;
+    });
+    document.getElementById('btnRight').addEventListener('touchend', (e) => {
+        console.log("button Right was clicked");
+        keyboard.RIGHT = true;
+    });
+});
+
 
 document.addEventListener('keydown', (event) => {
     // console.log(event);

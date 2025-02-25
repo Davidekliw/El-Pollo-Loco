@@ -29,10 +29,25 @@
 </head>
 
 <body onload="init()">
-    <h1>El pollo loco</h1>
+    <!-- <h1>El pollo loco</h1> -->
     <canvas id="canvas" width="720" height="480">
 
     </canvas>
+
+    <section class="btnContainer">
+        <div class="leftBlock">
+            <button id="btnLeft"><</button>
+            <button id="btnRight">></button>
+        </div>
+        <div class="rightBlock">
+            <button id="btnJump">^</button>
+            <button id="btnThrow">=></button>
+        </div>
+    </section>
+
+    <div>
+        <button id="game" onclick="toogleFullScreen()">Fullscreen</button>
+    </div>
 
     <!-- Todo Liste
      
