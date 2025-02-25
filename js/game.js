@@ -40,7 +40,23 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     document.getElementById('btnRight').addEventListener('touchend', (e) => {
         console.log("button Right was clicked");
-        keyboard.RIGHT = true;
+        keyboard.RIGHT = false;
+    });
+    document.getElementById('btnJump').addEventListener('touchstart', (e) => {
+        console.log("button SPACE was clicked");
+        keyboard.SPACE = true;
+    });
+    document.getElementById('btnJump').addEventListener('touchend', (e) => {
+        console.log("button SPACE was clicked");
+        keyboard.SPACE = false;
+    });
+    document.getElementById('btnThrow').addEventListener('touchstart', (e) => {
+        console.log("button D was clicked");
+        keyboard.KEYD = true;
+    });
+    document.getElementById('btnThrow').addEventListener('touchend', (e) => {
+        console.log("button D was clicked");
+        keyboard.KEYD = false;
     });
 });
 
