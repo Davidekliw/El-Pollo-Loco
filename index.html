@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>EPL</title>
+    <link rel="icon" type="image/x-icon" href="./img/3_enemies_chicken/chicken_small/1_walk/1_w.png">
     <link rel="stylesheet" href="style.css">
     <script src="./classes/drawable-object.class.js"></script>
     <script src="./classes/movable-object.class.js"></script>
@@ -24,41 +25,84 @@
     <script src="./classes/bottle.class.js"></script>
     <script src="./classes/coin.class.js"></script>
     <script src="./classes/endboss.class.js"></script>
-    <script src="./levels/level1.js"></script>
-    <script src="./js/game.js"></script>
+    <script src="./levels/level.js"></script>
+    <script defer src="./js/game.js"></script>
 </head>
 
-<body onload="init()">
-    <!-- <h1>El pollo loco</h1> -->
-    <canvas id="canvas" width="720" height="480">
-
-    </canvas>
-
-    <section class="btnContainer">
-        <div class="leftBlock">
-            <button id="btnLeft"><</button>
-            <button id="btnRight">></button>
+<body>
+    <!-- <div id="epl" class="d_flex d_none"> -->
+    <!-- <img src="./img/5_background/first_half_background.png" alt=""> -->
+    <!-- <div stylde="transform: scaleX(-1) !important;"> -->
+    <div class="landscapeScreen">
+        <div id="infoScreen" class="infoScreen">
+            <p>Bitte Gerät drehen :)</p>
         </div>
-        <div class="rightBlock">
-            <button id="btnJump">^</button>
-            <button id="btnThrow">=></button>
+    </div>
+    <!-- </div> -->
+    <div id="startScreen" class="startScreen">
+        <h1>El pollo loco</h1>
+        <div class="instructions">
+            <p>Was du tun musst... </p>
+            <span>Beseitige Gegner, indem du mit Flaschen auf Sie wirfst. :-)</span><br><br>
+            <span>Sammle - je nach Schwierigkeitsgrad - <b>ALLE</b> Coins ein, um gegen den Endgegner
+                anzutreten.</span><br><br>
+            <span>Besiege den Endgegner und starte Level 2.</span><br><br><br>
+        </div>
+        <div id="heaviness">
+            <span class="">Schwierigkeitsgrad auswählen</span>
+            <input type="range" min="0" max="100" value="50" id="heavinessSlider">
+            <div class="value"><span id="heavinessSliderValue">50</span>%</div>
+        </div>
+        <div class="startBtn" id="startBtn" onclick="init(1)" touchstart="init()">
+            <img src="./img/buttons/arrow-throw.png" class="startGameBtn">
+            <div class="startGameTxt">Start</div>
+        </div>
+    </div>
+    <section id="biggerScreen" class="headSection">
+        <canvas id="canvas" width="720" height="480"></canvas>
+        <div class="controlsBox" id="controlsBox">
+            <!-- <div id="controls"> -->
+            <section class="btnContainerTop">
+                <div class="blocks">
+                    <!-- <img class="gamePlayButtons" src="./img/buttons/info.png" id="btnInfo"> -->
+                    <div id="showLevelNbr"></div>
+                    <img class="gamePlayButtons" src="./img/buttons/full-screen.png" id="btnWide"
+                        onclick="toggleFullScreen()">
+                    <img class="gamePlayButtons d_none" src="./img/buttons/closeCross.png" id="btnNormal"
+                        onclick="toggleFullScreen()">
+                </div>
+            </section>
+            <section class="btnContainerBottom">
+                <div class="blocks">
+                    <img class="gamePlayButtons" src="./img/buttons/arrow-left.png" id="btnLeft">
+                    <img class="gamePlayButtons" src="./img/buttons/arrow-right.png" id="btnRight">
+                </div>
+                <!-- </section>
+            <section class="btnContainerBottomL"> -->
+                <div class="blocks">
+                    <img class="gamePlayButtons" src="./img/buttons/arrow-up.png" id="btnJump">
+                    <img class="gamePlayButtons" src="./img/buttons/arrow-throw.png" id="btnThrow">
+                </div>
+            </section>
+            <!-- </div> -->
         </div>
     </section>
 
-    <!-- <div>
-        <button id="game" onclick="toogleFullScreen()">Fullscreen</button>
-    </div> -->
-
     <!-- Todo Liste
      
-    geworfene flaschen müssen schaden machen
-    chicken müssen aus dem spiel genommen werden wenn x wert kleiner als -150x z.B.
-    Game Over anzeigen wenn Pepe Tod ist Neustart oder Beenden Button anzeigen
-    Coin bar muss hoch zählen wenn man einen einsammelt.
-    Tabasko flaschen müssen hoch zählen beim einsammeln
-    weniger werden wenn man welche wirft.
+    geworfene flaschen müssen explodieren wenn die etwas treffen
     Bilder loops müssen angepasst werden. z.B. beim springe oder bei ithurts.
-    -->>
+
+donation:
+Image by <a href="https://pixabay.com/users/clker-free-vector-images-3736/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=31197">Clker-Free-Vector-Images</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=31197">Pixabay</a>
+Image by <a href="https://pixabay.com/users/clker-free-vector-images-3736/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=31203">Clker-Free-Vector-Images</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=31203">Pixabay</a>
+Image by <a href="https://pixabay.com/users/clker-free-vector-images-3736/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=31212">Clker-Free-Vector-Images</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=31212">Pixabay</a>
+Image by <a href="https://pixabay.com/users/clker-free-vector-images-3736/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=27813">Clker-Free-Vector-Images</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=27813">Pixabay</a>
+Image by <a href="https://pixabay.com/users/clker-free-vector-images-3736/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=25066">Clker-Free-Vector-Images</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=25066">Pixabay</a>
+<a href="https://www.flaticon.com/free-icons/full-screen" title="full screen icons">Full screen icons created by meaicon - Flaticon</a>
+<a href="https://www.flaticon.com/de/kostenlose-icons/equis" title="equis Icons">Equis Icons erstellt von feen - Flaticon</a>
+    -->
+    <!-- </div> -->
 </body>
 
 </html>

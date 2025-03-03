@@ -1,29 +1,80 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let rewardsNeededToGetEndboss = 50;
+
+const slider = document.getElementById("heavinessSlider");
+const output = document.getElementById("heavinessSliderValue");
+
+slider.addEventListener("input", () => {
+    output.textContent = slider.value;
+    rewardsNeededToGetEndboss = slider.value;
+});
 
 
-function init() {
+function checkDevice() {
+    let isMobile = /Mobi|iPhone|iPad|Android/i.test(navigator.userAgent);
+    let isPortrait = window.innerHeight > window.innerWidth;
+
+    if (isMobile && isPortrait) {
+        document.querySelector(".landscapeScreen").style.display = "flex";
+    } else {
+        document.querySelector(".landscapeScreen").style.display = "none";
+    }
+}
+
+window.addEventListener("resize", checkDevice);
+
+
+function setLevelNbr() {
+    document.getElementById('showLevelNbr').innerHTML = `Level ${levelNbr}`;
+}
+
+function init(gameLevel) {
+    // document.getElementById('epl').classList.remove('d_none');
+    document.getElementById('biggerScreen').style.display = "flex";
+    document.getElementById('startScreen').style.display = "none";
+    // document.getElementById('startBtn').classList.remove('startBtn');
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);
+    initLevel(gameLevel);
+    setLevelNbr();
+    setTimeout(() => {
+        world = new World(canvas, keyboard);
+    }, 1500);
 
     // console.log('My Character is', world.character);
 
 }
 
-function toogleFullScreen() {
-    let elem = document.querySelector("canvas");
+function toggleFullScreen() {
+    document.getElementById('btnNormal').classList.toggle("d_none");
+    document.getElementById('btnWide').classList.toggle("d_none");
+    let elem = document.getElementById('biggerScreen');
 
     if (!document.fullscreenElement) {
-        elem.requestFullscreen().catch((err) => {
-            alert(
-                `Error attempting to enable fullscreen mode: ${err.message} (${err.name})`,
-            );
-        });
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.mozRequestFullScreen) { // Firefox
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) { // Chrome, Safari
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { // IE/Edge
+            elem.msRequestFullscreen();
+        }
     } else {
-        document.exitFullscreen();
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
     }
 }
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('btnLeft').addEventListener('touchstart', (e) => {

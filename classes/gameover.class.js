@@ -24,6 +24,8 @@ class GameOver extends MovableObject {
 
         setTimeout(() => {
             cancelAnimationFrame(world.gameLoopInt)
+            window.location.reload()
+
         }, 2000);
     }
 

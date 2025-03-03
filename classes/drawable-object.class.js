@@ -158,15 +158,15 @@ class DrawableObject {
     }
 
     getRightPicture(condition) {
-        if (condition >= 100) {
+        if (condition >= 90) {
             return 5;
         } else if (condition >= 80) {
             return 4;
         } else if (condition >= 60) {
             return 3;
-        } else if (condition >= 40) {
+        } else if (condition >= 35) {
             return 2;
-        } else if (condition >= 20) {
+        } else if (condition >= 15) {
             return 1;
         } else {
             // console.log(`irgendwas anderes:${condition}`);

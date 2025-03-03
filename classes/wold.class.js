@@ -1,7 +1,7 @@
 class World {
     gameLoopInt;
     character = new Character();
-    level = level1;
+    level = currentLevel;
     canvas;
     ctx;
     keyboard;
@@ -31,9 +31,13 @@ class World {
             this.setWorld();
             this.coinCounter();
             this.bottleCounter();
+        // this.draw();
+
         }, 1000);
 
         this.setWorld();
+        // this.update();
+        // this.draw();
         this.startGameLoop();
         // this.run();
         // this.draw();
@@ -124,6 +128,7 @@ class World {
                     // console.log(this.level.rewards[index].value);
                     // console.log(this.bottleBar.currentLoad);
 
+                    // this.bottleBar.currentLoad = this.bottleBar.currentLoad + (1 / this.allBottlesInLevel) * 1000
                     this.bottleBar.currentLoad = this.bottleBar.currentLoad + this.level.rewards[index].value
                     this.bottleBar.setPercentage(this.bottleBar.currentLoad, "IMG_STATUSBARBOTTLES");
 
@@ -137,7 +142,7 @@ class World {
                     console.log(this.coinBar.currentLoad);
                     
                     this.coinBar.setPercentage(this.coinBar.currentLoad, "IMG_STATUSBARCOINS");
-                    console.log(this.coinBar.currentLoad);
+                    // console.log(this.coinBar.currentLoad);
                 } else {
                     console.log(`Es ist etwas anderes an Position ${index}`);
                 }

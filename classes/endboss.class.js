@@ -71,7 +71,7 @@ class Endboss extends MovableObject {
     }
 
     bossShowStatusBar() {
-        this.world.bossBar = new StatusBar(100, "IMG_STATUSBARBOSS", -5);
+        this.world.bossBar = new StatusBar(100, "IMG_STATUSBARBOSS", 45);
         // console.log('starte statusbar');
     }
 
@@ -138,9 +138,9 @@ class Endboss extends MovableObject {
         let alertInt = setInterval(() => {
             this.playPictureAnimation(this.IMG_ALERT);
         }, 200);
-        setTimeout(() => {
-            window.clearInterval(alertInt);
-        }, 1500);
+        // setTimeout(() => {
+        //     window.clearInterval(alertInt);
+        // }, 1500);
     }
 
 
@@ -168,8 +168,8 @@ class Endboss extends MovableObject {
     spawnBottle(x, y) {
         let bottle = new Bottle(x, y);
         this.world.level.rewards.push(bottle);
-        console.log("das ging");
-        console.log(this.world.level.rewards);
+        // console.log("das ging");
+        // console.log(this.world.level.rewards);
 
 
     }
@@ -206,17 +206,19 @@ class Endboss extends MovableObject {
             if (this.x >= 2300) {
                 this.playPictureAnimation(this.IMG_ATTACK);
                 this.moveLeft();
-                console.log(this.x);
+                // console.log(this.x);
+            }
+            else {
+                // setTimeout(() => {
+                    window.clearInterval(attackInt);
+                    // this.loadImage(this.IMG_WALKING[1]);
+                    setTimeout(() => {
+                        this.moveBack();
+                        // console.log(this.x);
+                    }, 1000)
+                // }, 1500);
             }
         }, 100);
-        setTimeout(() => {
-            window.clearInterval(attackInt);
-            this.loadImage(this.IMG_WALKING[1]);
-            setTimeout(() => {
-                this.moveBack();
-                console.log(this.x);
-            }, 1000)
-        }, 1500);
     }
 
     // in der Bottel klasse muss noch ein standardspawnpunkt hinterlegt werden.
@@ -233,8 +235,9 @@ class Endboss extends MovableObject {
     animate() {
         let coinsNeedToFinishLevelInt = setInterval(() => {
             // console.log(this.world.coinBar.currentLoad, this.world.allCoinsInLevel);
-            if (this.world.coinBar.currentLoad >= this.world.allCoinsInLevel) {
-                // console.log(`${this.world.coinBar.currentLoad} >= ${this.world.allCoinsInLevel}`);
+            if (this.world.coinBar.currentLoad >= rewardsNeededToGetEndboss) {
+                console.log(`${this.world.coinBar.currentLoad} >= ${rewardsNeededToGetEndboss}`);
+                console.log(this.world.allCoinsInLevel);
 
                 // console.log("jetzt könnte man das level abschließen");
                 clearInterval(coinsNeedToFinishLevelInt);

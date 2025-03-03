@@ -4,11 +4,11 @@ class GameWin extends MovableObject {
     height = 480;
 
     IMG_GAMEWINSCREEN = [
-        './img/win1.png',
-        './img/win2.png',
-        './img/win3.png',
-        './img/win4.png',
-        './img/win5.png'
+        './img/9_intro_outro_screens/win/win1.png',
+        './img/9_intro_outro_screens/win/win1.png',
+        './img/9_intro_outro_screens/win/win1.png',
+        './img/9_intro_outro_screens/win/win1.png',
+        './img/9_intro_outro_screens/win/win1.png'
     ];
 
     constructor(x) {
@@ -24,8 +24,9 @@ class GameWin extends MovableObject {
         // console.log(this.x, this.y, this.width, this.height);
         setTimeout(() => {
             cancelAnimationFrame(world.gameLoopInt);
-            startIntro();
-        }, 2000);
+            // window.location.reload();
+            init(++levelNbr);
+        }, 2500);
     }
 
     // draw(ctx) {

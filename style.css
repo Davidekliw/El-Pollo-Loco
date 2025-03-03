@@ -3,48 +3,307 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: black;
+    /* background-color: #f19d50; */
     margin: 0;
+    /* max-width: 100vw; */
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+
+    /* transform: scaleX(-1); */
+    background-image: url('./img/5_background/first_half_background.png');
+}
+
+
+.d_flex {
+    display: flex;
+}
+
+.d_none {
+    display: none;
+}
+
+.startScreen {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+    margin: auto;
+}
+
+/* .instructions {
+    width: 60%;
+    margin: auto;
+} */
+
+span {
+    font-size: large;
+}
+
+.startBtn:hover {
+    cursor: pointer;
+}
+
+.startGameBtn {
+    width: 60px;
+    height: 60px;
+}
+
+.startGameTxt {
+    font-size: 40px;
+    font-family: 'Courier New', Courier, monospace;
+    z-index: 1;
+    /* color: orange; */
+}
+
+.headSection {
+    display: none;
+    justify-content: center;
+    position: relative;
+    max-width: 100%;
+    /* height: 100vh; */
+    max-height: 100%;
+}
+
+.infoScreen {
+    width: 100vw;
+    /* height: 480px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 canvas {
     background-color: black;
     display: block;
+    max-width: 100%;
+    max-height: 100%;
 }
 
-.btnContainer {
-    max-width: 720px;
-    width: 100%;
-    padding: 0 20px;
+.controlsBox {
+    /* display: none; */
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 5px solid white;
+    /* border: linear-gradient(white, yellow); */
+    /* height: 100%; */
+    /* width: 100%; */
+}
+
+/* #controls {
     display: flex;
+    position: relative;
+} */
+
+/* ####################################### */
+.btnContainerTop {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    /* max-width: 720px; */
+    /* width: 100%; */
+    /* height: 50px; */
+    /* margin: 5px 5px; */
     justify-content: space-between;
     align-items: center;
 }
 
-button {
-    width: 80px;
-    height: 80px;
-}
-
-.leftBlock {
+.blocks {
     display: flex;
+    align-items: center;
+    padding: 5px;
     gap: 10px;
 }
 
-.rightBlock {
+/* 
+.topBlocks {
     display: flex;
-    gap: 10px;
+    top: 0;
+    right: 0;
+} */
+
+.btnContainerBottom {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    /* max-width: 720px; */
+    width: 100%;
+    /* height: 50px; */
+    /* margin: 5px 5px; */
+    justify-content: space-between;
+    align-items: center;
+}
+
+.gamePlayButtons {
+    width: 50px;
+    height: 50px;
+}
+
+p {
+    /* z-index: 3; */
+    font-size: 40px;
+    font-weight: 900;
+    color: orange;
+}
+
+.landscapeScreen {
+    display: none;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
 
+
+#showLevelNbr {
+    top: 0;
+    right: 0;
+    /* transform: translate(-50%, -50%); */
+    /* font-size: 80px; */
+    font-weight: bold;
+    color: orange;
+    opacity: 1;
+    animation: levelAnimation 1.5s ease-out forwards;
+    /* display: flex; */
+    /* align-items: center; */
+}
+
+@keyframes levelAnimation {
+    0% {
+        position: fixed;
+        font-size: 80px;
+        top: 50vh;
+        right: 50vw;
+        transform: translate(50%, -50%);
+        opacity: 1;
+    }
+
+    20% {
+        font-size: 50px;
+        position: fixed;
+        top: 50vh;
+        right: 50vw;
+        transform: translate(50%, -50%);
+        opacity: 1;
+    }
+
+    40% {
+        font-size: 80px;
+        position: fixed;
+        top: 50vh;
+        right: 50vw;
+        transform: translate(50%, -50%);
+        opacity: 1;
+    }
+
+    60% {
+        font-size: 50px;
+        position: fixed;
+        top: 50vh;
+        right: 50vw;
+        transform: translate(50%, -50%);
+        opacity: 1;
+    }
+/* 
+    90% {
+        position: fixed;
+        font-size: 80px;
+        top: 50vh;
+        right: 50vw;
+        transform: translate(50%, -50%);
+        opacity: 1;
+    }
+*/
+
+    100% {
+        font-size: 40px;
+        /* top: 10px; */
+        /* Zielposition */
+        /* right: 90%; */
+        /* Zielposition */
+        /* transform: translate(-50%, 0); */
+        opacity: 1;
+    }
+}
+
+
+
+/* 
 @media only screen and (max-width: 760px) {
     canvas {
         width: 100%;
     }
+} */
+
+@media only screen and (max-width: 720px) {
+
+    /* .controlsBox {
+        display: block;
+    }     */
+    .btnContainerBottom {
+        display: flex;
+    }
+
+    .btnContainerTop {
+        display: none;
+    }
 }
 
-@media only screen and (max-height: 480px) {
+@media only screen and (max-width: 500px) {
+    .gamePlayButtons {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .gamePlayButtons {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+@media only screen and (max-height: 400px) {
+    .gamePlayButtons {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media only screen and (max-height: 300px) {
+    .gamePlayButtons {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+/* @media only screen and (max-height: 480px) {
     canvas {
         height: 100vh;
     }
+} */
+
+/* @media screen and (orientation:portrait) {
+    .landscapeScreen {
+        display: flex;
+    }
 }
+
+@media screen and (orientation:landscape) {
+    .landscapeScreen {
+        display: none;
+    }
+} */
