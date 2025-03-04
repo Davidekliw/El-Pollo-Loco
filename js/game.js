@@ -77,35 +77,45 @@ function toggleFullScreen() {
 
 
 document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("contextmenu", (e) => e.preventDefault());
+
     document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
+        e.preventDefault();
         console.log("button Left was clicked");
         keyboard.LEFT = true;
     });
     document.getElementById('btnLeft').addEventListener('touchend', (e) => {
+        e.preventDefault();
         console.log("button Left was clicked");
         keyboard.LEFT = false;
     });
     document.getElementById('btnRight').addEventListener('touchstart', (e) => {
+        e.preventDefault();
         console.log("button Right was clicked");
         keyboard.RIGHT = true;
     });
     document.getElementById('btnRight').addEventListener('touchend', (e) => {
+        e.preventDefault();
         console.log("button Right was clicked");
         keyboard.RIGHT = false;
     });
     document.getElementById('btnJump').addEventListener('touchstart', (e) => {
+        e.preventDefault();
         console.log("button SPACE was clicked");
         keyboard.SPACE = true;
     });
     document.getElementById('btnJump').addEventListener('touchend', (e) => {
+        e.preventDefault();
         console.log("button SPACE was clicked");
         keyboard.SPACE = false;
     });
     document.getElementById('btnThrow').addEventListener('touchstart', (e) => {
+        e.preventDefault();
         console.log("button D was clicked");
         keyboard.KEYD = true;
     });
     document.getElementById('btnThrow').addEventListener('touchend', (e) => {
+        e.preventDefault();
         console.log("button D was clicked");
         keyboard.KEYD = false;
     });
