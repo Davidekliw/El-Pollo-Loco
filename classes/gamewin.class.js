@@ -26,7 +26,7 @@ class GameWin extends MovableObject {
             cancelAnimationFrame(world.gameLoopInt);
             // window.location.reload();
             init(++levelNbr);
-        }, 2500);
+        }, 1500);
     }
 
     // draw(ctx) {

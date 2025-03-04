@@ -96,7 +96,7 @@ class Endboss extends MovableObject {
             // console.log(index);
             let deatInt = setInterval(() => {
                 this.playPictureAnimation(this.IMG_DEAD);
-            }, 400);
+            }, 200);
             setTimeout(() => {
                 world.level.enemies.splice(index, 1);
                 window.clearInterval(deatInt);
@@ -116,6 +116,7 @@ class Endboss extends MovableObject {
                 this.getAHit = false;
                 this.loadImage(this.IMG_WALKING[1]);
                 this.startBossAttack();
+                console.log('los gehts');
             }, 680);
         }
     }
@@ -138,11 +139,13 @@ class Endboss extends MovableObject {
         let alertInt = setInterval(() => {
             this.playPictureAnimation(this.IMG_ALERT);
         }, 200);
-        // setTimeout(() => {
-        //     window.clearInterval(alertInt);
-        // }, 1500);
+        setTimeout(() => {
+            window.clearInterval(alertInt);
+            this.startBossAttack();
+        }, 1500);
     }
 
+    // Animationenen beenden wenn es einen treffer gegeben hat
 
 
     moveToLeft() {
