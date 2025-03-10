@@ -6,7 +6,18 @@ let rewardsNeededToGetEndboss = 50;
 const slider = document.getElementById("heavinessSlider");
 const output = document.getElementById("heavinessSliderValue");
 
-slider.addEventListener("input", () => {
+if (soundEnabled === false) {
+    toggleMuteAudio(soundEnabled);
+}
+
+if (rewardsNeededToGetEndboss !== null) {
+    document.getElementById("heavinessSlider").value = rewardsNeededToGetEndboss;
+    updateSlider();
+}
+
+slider.addEventListener("input", updateSlider);
+
+function updateSlider() {
     output.textContent = slider.value;
     rewardsNeededToGetEndboss = slider.value;
 });
@@ -170,6 +181,27 @@ document.addEventListener('keyup', (event) => {
         keyboard.KEYD = false;
     }
 });
+
+function loadSound(url) {
+    if (soundEnabled === true) {
+        let sound = new Audio(url);
+        return sound;
+    }
+    return null;
+}
+
+function pauseSound(sound) {
+    if (sound) {
+        sound.pause();
+    }
+}
+
+function playSound(sound) {
+    if (sound) {
+        sound.play();
+        // console.log(sound);
+    }
+}
 
 
 
