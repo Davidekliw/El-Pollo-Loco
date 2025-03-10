@@ -246,7 +246,7 @@ class Endboss extends MovableObject {
     animate() {
         let coinsNeedToFinishLevelInt = setInterval(() => {
             // console.log(this.world.coinBar.currentLoad, this.world.allCoinsInLevel);
-            if (this.world.coinBar.currentLoad >= rewardsNeededToGetEndboss) {
+            if (this.world.coinBar.currentLoad >= rewardsNeededToGetEndboss - 1) {
                 console.log(`${this.world.coinBar.currentLoad} >= ${rewardsNeededToGetEndboss}`);
                 console.log(this.world.allCoinsInLevel);
 
