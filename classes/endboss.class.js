@@ -13,6 +13,9 @@ class Endboss extends MovableObject {
     speed = 30.5;
     startBossInt;
     getAHit = false;
+    bossSound = loadSound('./audio/bossSound.mp3');
+    deadBossSound = loadSound('./audio/deadBoss.mp3');
+    attackBossSound = loadSound('./audio/bossAttack.mp3');
 
 
     IMG_WALKING = [
@@ -94,6 +97,7 @@ class Endboss extends MovableObject {
         if (!this.isEnoughLive()) {
             // console.log(`Nr: ${index} ist TOT.(${world.level.enemies[index].live} Leben)`);
             // console.log(index);
+            playSound(this.deadBossSound);
             let deatInt = setInterval(() => {
                 this.playPictureAnimation(this.IMG_DEAD);
             }, 200);
@@ -105,6 +109,7 @@ class Endboss extends MovableObject {
                 this.world.character.gameover("win");
             }, 2000);
         } else {
+            playSound(this.chickenHitSound);
             let hurtInt = setInterval(() => {
                 this.playPictureAnimation(this.IMG_HURT);
                 // console.log(this.world.bossBar.currentLoad);
@@ -157,10 +162,12 @@ class Endboss extends MovableObject {
             // console.log(this.x < (this.world.level.max_XPosition));
             if (this.x + this.width < this.world.level.level_end_x) {
                 window.clearInterval(moveLeftInt)
+                pauseSound(this.bossSound);
                 this.startAlert();
                 // this.loadImage(this.IMG_WALKING[1]);
             }
             else {
+                playSound(this.bossSound);
                 this.moveLeft();
                 this.playPictureAnimation(this.IMG_WALKING);
             }
@@ -205,6 +212,7 @@ class Endboss extends MovableObject {
 
 
     startBossAttack() {
+        playSound(this.attackBossSound);
         let attackInt = setInterval(() => {
             if (this.x >= 2300) {
                 this.playPictureAnimation(this.IMG_ATTACK);

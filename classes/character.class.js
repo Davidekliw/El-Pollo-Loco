@@ -82,10 +82,7 @@ class Character extends MovableObject {
         './img/2_character_pepe/5_dead/D-56.png',
         './img/2_character_pepe/5_dead/D-57.png'
     ];
-    // world;
-    // walking_sound = new Audio('./audio/walking.mp3');
-    // walking_sound = new Audi('./audio/stepsOnSand.mp3');
-    walking_sound = new Audio('./audio/stepsshorter.mp3');
+
     speed = this.speed * 80;
 
     constructor() {
@@ -159,19 +156,28 @@ class Character extends MovableObject {
         }
     }
 
+
+    // walking_sound = new Audio('./audio/walking.mp3');
+    // walking_sound = new Audi('./audio/stepsOnSand.mp3');
+    // walking_sound = new Audio('./audio/stepsshorter.mp3');
+    walking_sound = loadSound('./audio/stepsshorter.mp3');
+
+
     animateCharacter() {
         setInterval(() => {
-            this.walking_sound.pause();
+            // console.log(soundEnabled);
+            pauseSound(this.walking_sound);
+            // this.walking_sound.pause();
             if (this.world.keyboard.RIGHT && this.x < this.max_XPosition) {
                 this.moveRight();
                 this.otherDirection = false;
-                this.walking_sound.play();
+                playSound(this.walking_sound);
             }
 
             if (this.world.keyboard.LEFT && !this.isDeath && this.x > this.min_XPosition) {
                 this.moveLeft();
                 this.otherDirection = true;
-                this.walking_sound.play();
+                playSound(this.walking_sound);
             }
 
             this.moveCamera();

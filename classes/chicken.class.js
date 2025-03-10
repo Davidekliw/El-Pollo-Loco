@@ -55,6 +55,7 @@ class Chicken extends MovableObject {
             window.clearInterval(this.chickenInt);
             let chickenInt = setInterval(() => {
                 this.playPictureAnimation(this.IMG_DEAD);
+                playSound(this.chickenDeadSound);
             }, 1000 / 60);
             setTimeout(() => {
                 window.clearInterval(chickenInt)
@@ -63,6 +64,7 @@ class Chicken extends MovableObject {
             }, 400);
         } else {
             // console.log(this.isEnoughLive());
+            playSound(this.chickenHitSound);
             console.log(`Nr: ${index} hat noch ${world.level.enemies[index].live} Leben`);
         }
     }

@@ -18,6 +18,8 @@ class World {
     throwableObjects = [];
     allBottlesInLevel;
     allCoinsInLevel;
+    coinSound = loadSound('./audio/coin.mp3');
+    bottleSound = loadSound('./audio/bottle.mp3'); 
     // reward = new Reward();
 
 
@@ -129,6 +131,7 @@ class World {
                     // console.log(this.bottleBar.currentLoad);
 
                     // this.bottleBar.currentLoad = this.bottleBar.currentLoad + (1 / this.allBottlesInLevel) * 1000
+                    playSound(this.bottleSound);
                     this.bottleBar.currentLoad = this.bottleBar.currentLoad + this.level.rewards[index].value
                     this.bottleBar.setPercentage(this.bottleBar.currentLoad, "IMG_STATUSBARBOTTLES");
 
@@ -138,6 +141,7 @@ class World {
                     // console.log(this.character.x + this.character.width, this.character.y, obj.x - obj.collidingFrameWidth / 2, obj.y - obj.collidingFrameHight / 2);
                     // console.log(this.level.rewards[index].value);
                     // this.coinBar.currentLoad = this.coinBar.currentLoad + this.level.rewards[index].value
+                    playSound(this.coinSound);
                     this.coinBar.currentLoad = this.coinBar.currentLoad + (1 / this.allCoinsInLevel) * 1000
                     console.log(this.coinBar.currentLoad);
                     

@@ -55,7 +55,8 @@ class SmallChicken extends MovableObject {
             window.clearInterval(this.chickenInt);
             let smallChickenInt = setInterval(() => {
                 this.playPictureAnimation(this.IMG_DEAD);
-                console.log('chickenintervall');
+                playSound(this.chickenDeadSound);
+                // console.log('chickenintervall');
             }, 1000 / 60);
             setTimeout(() => {
                 window.clearInterval(smallChickenInt)
