@@ -9,7 +9,7 @@ class Endboss extends MovableObject {
     collidingFrameWidth = 240;
     collidingFrameHight = 340;
     makeDamage = 15;
-    live = 100;
+    live;
     speed = 30.5;
     startBossInt;
     getAHit = false;
@@ -60,8 +60,9 @@ class Endboss extends MovableObject {
     ];
 
 
-    constructor() {
+    constructor(live = 40) {
         super();
+        this.live = live;
         this.loadImage(this.IMG_WALKING[1]);
         this.loadImages(this.IMG_WALKING);
         this.loadImages(this.IMG_ALERT);
