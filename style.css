@@ -1,12 +1,33 @@
-body {
+* {
+    box-sizing: border-box;
     margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    font-family: Lilita One;
+    font-size: 32px;
+}
+
+body {
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* flex-direction: column; */
     /* max-width: 100vw; */
     /* width: 100vw; */
     min-height: 100vh;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url('./img/5_background/first_half_background.png');
+    color: #ff8400;
+}
+
+.backgroundImg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    min-height: 100;
     background-position: center center;
 
     background-size: cover;
@@ -14,12 +35,34 @@ body {
     background-image: url('./img/5_background/first_half_background.png');
 }
 
-.d_flex {
-    display: flex;
+h1 {
+    font-size: 60px;
 }
 
-.d_none {
-    display: none;
+a {
+    color: #ff8400;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+b {
+    color: #ff8400;
+}
+
+a:hover {
+    color: #894701;
+}
+
+.dFlex {
+    display: flex !important;
+}
+
+.dNone {
+    display: none !important;
+}
+
+.noScroll {
+    overflow: hidden;
 }
 
 .startScreen {
@@ -33,13 +76,109 @@ body {
     margin: auto;
 }
 
-/* .instructions {
-    width: 60%;
-    margin: auto;
+.instructions {
+    max-width: 60%;
+    background-color: rgba(0,0,0,0.2);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    /* margin: auto; */
+}
+
+.menuOpenButton {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+}
+
+.menuOpenButton:hover {
+    color: #894701;
+}
+
+.menuOpenButton img {
+    width: 40px;
+    transform: rotate(180deg);
+    transition: transform 0.2s linear;
+}
+
+
+.rotate90 {
+    transform: rotate(90deg) !important;
+}
+/* .openMenue {
+    animation: rotateLeft 0.5 ease-out forwards;
+}
+
+.closeMenue {
+    animation: rotateRight 0.5 ease-out forwards;
 } */
+
+.gameControl {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    background-color: rgba(0,0,0,0.2);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+}
+
+.gameControl img {
+    width: 50px;
+}
+
+.gameControlLine {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+}
+
+.heavinessPosition {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.heavinessPosition div {
+    font-size: large;
+}
+
+.heavinessSlider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    background: orange;
+    border-radius: 4px;
+    outline: none;
+}
+
+.heavinessSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: darkorange;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.sound {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+}
+
+.muteBox {
+    display: block;
+    width: 50px;
+    cursor: pointer;
+}
 
 span {
     font-size: large;
+    color: black;
 }
 
 .startBtn:hover {
@@ -53,18 +192,14 @@ span {
 
 .startGameTxt {
     font-size: 40px;
-    font-family: 'Courier New', Courier, monospace;
-    z-index: 1;
-    /* color: orange; */
 }
 
-.headSection {
-    display: none;
-    justify-content: center;
-    position: relative;
-    max-width: 100%;
-    /* height: 100vh; */
-    max-height: 100%;
+.startGameTxt:hover {
+    color: #894701;
+}
+
+footer {
+    padding-bottom: 8px;
 }
 
 .infoScreen {
@@ -76,11 +211,22 @@ span {
     text-align: center;
 }
 
+.headSection {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    /* max-width: 100%; */
+    height: 100vh;
+    /* max-height: 100%; */
+}
+
 canvas {
     background-color: black;
     display: block;
     max-width: 100%;
-    /* max-height: 100%; */
+    max-height: 100%;
+    border: 5px solid white;
 }
 
 .controlsBox {
@@ -90,16 +236,24 @@ canvas {
     right: 0;
     bottom: 0;
     left: 0;
-    border: 5px solid white;
+    margin: auto;
+    width: 720px;
+    height: 480px;
+    max-width: 100%;
+    max-height: 100%;
+    /* border: 5px solid white; */
     /* border: linear-gradient(white, yellow); */
     /* height: 100%; */
     /* width: 100%; */
 }
 
-/* #controls {
-    display: flex;
+#controls {
+    /* display: flex; */
+    width: 100%;
+    height: 100%;
     position: relative;
-} */
+    /* border: 5px solid violet; */
+}
 
 /* ####################################### */
 .btnContainerTop {
@@ -118,8 +272,8 @@ canvas {
 .blocks {
     display: flex;
     align-items: center;
-    padding: 5px;
-    gap: 10px;
+    padding: 16px;
+    gap: 24px;
 }
 
 /* 
@@ -144,6 +298,11 @@ canvas {
 .gamePlayButtons {
     width: 50px;
     height: 50px;
+}
+
+.gamePlayButtonsBottomBackground {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
 }
 
 p {
@@ -209,12 +368,11 @@ p {
     }
 
     100% {
-        font-size: 40px; /* Hier fixieren, damit es nicht weiter schrumpft */
+        font-size: 40px;
         /* top: 0; */
         /* right: 0; */
     }
 }
-
 
 
 /* 
