@@ -7,7 +7,7 @@ class SmallChicken extends MovableObject {
     collidingFramey = 5;
     collidingFrameWidth = 50;
     collidingFrameHight = 45;
-    minXDistance = 500;
+    minXDistance = 600;
     makeDamage = 4;
     live = 10;
     chickenInt;
