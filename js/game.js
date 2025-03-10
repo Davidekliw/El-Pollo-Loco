@@ -1,7 +1,8 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-let rewardsNeededToGetEndboss = 50;
+let rewardsNeededToGetEndboss = localStorage.getItem("heaviness") ?? 50;
+let soundEnabled = localStorage.getItem("soundEnabled") !== "false";
 
 const slider = document.getElementById("heavinessSlider");
 const output = document.getElementById("heavinessSliderValue");
@@ -20,7 +21,8 @@ slider.addEventListener("input", updateSlider);
 function updateSlider() {
     output.textContent = slider.value;
     rewardsNeededToGetEndboss = slider.value;
-});
+    localStorage.setItem("heaviness", rewardsNeededToGetEndboss);
+}
 
 
 function checkDevice() {
