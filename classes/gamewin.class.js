@@ -5,17 +5,18 @@ class GameWin extends MovableObject {
 
     IMG_GAMEWINSCREEN = [
         './img/9_intro_outro_screens/win/win1.png',
-        './img/9_intro_outro_screens/win/win1.png',
-        './img/9_intro_outro_screens/win/win1.png',
-        './img/9_intro_outro_screens/win/win1.png',
-        './img/9_intro_outro_screens/win/win1.png'
+        './img/9_intro_outro_screens/win/win2.png',
+        './img/9_intro_outro_screens/win/win3.png',
+        './img/9_intro_outro_screens/win/win4.png',
+        './img/9_intro_outro_screens/win/win5.png',
+        './img/9_intro_outro_screens/win/win6.png'
     ];
 
     constructor(x) {
         super();
         // console.log(x);
         this.x = x * -1;
-        let randomIndex = Math.floor(Math.random() * 5);
+        let randomIndex = Math.floor(Math.random() * 6);
         // console.log(randomIndex);
         this.loadImage(this.IMG_GAMEWINSCREEN[randomIndex]);
         this.loadImages(this.IMG_GAMEWINSCREEN);
