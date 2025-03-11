@@ -13,6 +13,7 @@ class Endboss extends MovableObject {
     speed = 30.5;
     startBossInt;
     getAHit = false;
+    timeOutIntv;
     bossSound = loadSound('./audio/bossSound.mp3');
     deadBossSound = loadSound('./audio/deadBoss.mp3');
     attackBossSound = loadSound('./audio/bossAttack.mp3');
@@ -92,33 +93,38 @@ class Endboss extends MovableObject {
 
     getDamage(damage, index) {
         this.getAHit = true;
+        this.otherDirection = false;
+
         // console.log(damage);
         this.world.level.enemies[index].live -= damage;
         this.world.bossBar.setPercentage(this.world.level.enemies[index].live, "IMG_STATUSBARBOSS")
+        window.clearInterval(this.currentIntv);
+        window.clearTimeout(this.timeOutIntv);
         if (!this.isEnoughLive()) {
             // console.log(`Nr: ${index} ist TOT.(${world.level.enemies[index].live} Leben)`);
             // console.log(index);
             playSound(this.deadBossSound);
-            let deatInt = setInterval(() => {
+            window.clearInterval(this.currentIntv);
+            this.currentIntv = setInterval(() => {
                 this.playPictureAnimation(this.IMG_DEAD);
             }, 200);
             setTimeout(() => {
                 world.level.enemies.splice(index, 1);
-                window.clearInterval(deatInt);
+                window.clearInterval(this.currentIntv);
                 window.clearInterval(this.chickenInt);
                 // console.log(`Nummer ${this.chickenInt} wurde eliminiert`);
                 this.world.character.gameover("win");
             }, 2000);
         } else {
             playSound(this.chickenHitSound);
-            let hurtInt = setInterval(() => {
+            this.currentIntv = setInterval(() => {
                 this.playPictureAnimation(this.IMG_HURT);
                 // console.log(this.world.bossBar.currentLoad);
                 // console.log(`Nr: ${index} hat noch ${world.level.enemies[index].live} Leben`);
             }, 200);
 
             setTimeout(() => {
-                window.clearInterval(hurtInt);
+                window.clearInterval(this.currentIntv);
                 this.getAHit = false;
                 this.loadImage(this.IMG_WALKING[1]);
                 this.startBossAttack();
@@ -134,7 +140,7 @@ class Endboss extends MovableObject {
         // console.log('es ist soweit');
         // console.log(this.world.level.max_XPosition - canvas.width);
         if (this.world.bottleBar.currentLoad <= 20) {
-            this.spawnBottle(2450, 320)
+            this.spawnBottle(this.level.level_end_x - 450, 320)
         }
         this.bossShowStatusBar();
         this.moveToLeft();
@@ -142,11 +148,11 @@ class Endboss extends MovableObject {
 
 
     startAlert() {
-        let alertInt = setInterval(() => {
+        this.currentIntv = setInterval(() => {
             this.playPictureAnimation(this.IMG_ALERT);
         }, 200);
         setTimeout(() => {
-            window.clearInterval(alertInt);
+            window.clearInterval(this.currentIntv);
             this.startBossAttack();
         }, 1500);
     }
@@ -155,14 +161,14 @@ class Endboss extends MovableObject {
 
 
     moveToLeft() {
-        let moveLeftInt = setInterval(() => {
+        this.currentIntv = setInterval(() => {
             // console.log(`${this.x} < ${this.world.level.max_XPosition - this.width}`);
             // console.log(this.world.level.max_XPosition - this.width);
             // console.log(this.x);
             // 2620
             // console.log(this.x < (this.world.level.max_XPosition));
             if (this.x + this.width < this.world.level.level_end_x) {
-                window.clearInterval(moveLeftInt)
+                window.clearInterval(this.currentIntv);
                 pauseSound(this.bossSound);
                 this.startAlert();
                 // this.loadImage(this.IMG_WALKING[1]);
@@ -173,7 +179,7 @@ class Endboss extends MovableObject {
                 this.playPictureAnimation(this.IMG_WALKING);
             }
         }, 200);
-        window.clearInterval(this.startBossInt);
+        // window.clearInterval(this.startBossInt);
     }
 
     spawnBottle(x, y) {
@@ -186,21 +192,21 @@ class Endboss extends MovableObject {
     }
 
     moveBack() {
-        let moveBackInt = setInterval(() => {
+        this.currentIntv = setInterval(() => {
             if (this.x > this.world.level.level_end_x) {
-                window.clearInterval(moveBackInt);
+                window.clearInterval(this.currentIntv);
                 this.loadImage(this.IMG_WALKING[1]);
                 this.otherDirection = false;
-                this.spawnBottle(2650, 320);
-                setTimeout(() => {
+                this.spawnBottle(this.level_end_x - 150, 320);
+                this.timeOutIntv = setTimeout(() => {
                     this.moveToLeft();
                 }, 1500);
             }
             else if (this.getAHit) {
-                window.clearInterval(moveBackInt);
+                window.clearInterval(this.currentIntv);
                 this.otherDirection = false;
-                this.spawnBottle(2650, 320);
-                this.playPictureAnimation(this.IMG_ATTACK);
+                this.spawnBottle(this.level_end_x - 150, 320);
+                // this.playPictureAnimation(this.IMG_ATTACK);
             }
             else {
                 this.otherDirection = true;
@@ -208,13 +214,13 @@ class Endboss extends MovableObject {
                 this.playPictureAnimation(this.IMG_WALKING);
             }
         }, 200);
-        window.clearInterval(this.startBossInt);
+        // window.clearInterval(this.startBossInt);
     }
 
 
     startBossAttack() {
         playSound(this.attackBossSound);
-        let attackInt = setInterval(() => {
+        this.currentIntv = setInterval(() => {
             if (this.x >= 2300) {
                 this.playPictureAnimation(this.IMG_ATTACK);
                 this.moveLeft();
@@ -222,12 +228,12 @@ class Endboss extends MovableObject {
             }
             else {
                 // setTimeout(() => {
-                    window.clearInterval(attackInt);
-                    // this.loadImage(this.IMG_WALKING[1]);
-                    setTimeout(() => {
-                        this.moveBack();
-                        // console.log(this.x);
-                    }, 1000)
+                window.clearInterval(this.currentIntv);
+                // this.loadImage(this.IMG_WALKING[1]);
+                setTimeout(() => {
+                    this.moveBack();
+                    // console.log(this.x);
+                }, 1000)
                 // }, 1500);
             }
         }, 100);
@@ -245,15 +251,15 @@ class Endboss extends MovableObject {
 
 
     animate() {
-        let coinsNeedToFinishLevelInt = setInterval(() => {
+        this.currentIntv = setInterval(() => {
             // console.log(this.world.coinBar.currentLoad, this.world.allCoinsInLevel);
             if (this.world.coinBar.currentLoad >= rewardsNeededToGetEndboss - 1) {
                 console.log(`${this.world.coinBar.currentLoad} >= ${rewardsNeededToGetEndboss}`);
                 console.log(this.world.allCoinsInLevel);
 
                 // console.log("jetzt könnte man das level abschließen");
-                clearInterval(coinsNeedToFinishLevelInt);
-                this.startBossInt = setInterval(() => {
+                window.clearInterval(this.currentIntv);
+                this.currentIntv = setInterval(() => {
                     // if (this.world) {
                     // console.log(this.world.camera_x);
                     // console.log(this.world.character.x);
@@ -263,10 +269,9 @@ class Endboss extends MovableObject {
 
 
                     if (this.world.character.x >= 2200) {
+                        window.clearInterval(this.currentIntv);
                         this.initEndFight();
                     }
-
-
                 }, 200);
             }
         }, 1000);
