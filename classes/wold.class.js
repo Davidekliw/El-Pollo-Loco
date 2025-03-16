@@ -82,8 +82,8 @@ class World {
 
     update() {
         this.throwableObject();
-        this.checkCollisions();
-        this.checkObjectCollisions();
+        !this.character.isDeath && this.checkCollisions();
+        !this.character.isDeath && this.checkObjectCollisions();
     };
 
     throwableObject() {
@@ -94,7 +94,7 @@ class World {
             // console.log(this.character.world);
             if (this.throwableObjects.length == 0) {
                 world.character.timeSinceLastAction = performance.now();
-                // console.log('do it');
+                console.log('do it');
                 let bottle = new ThrowableObject(this.character.x + this.character.width / 2 - 40, this.character.y + this.character.collidingFramey)
                 this.throwableObjects.push(bottle);
             }
@@ -142,6 +142,7 @@ class World {
                     // console.log(this.level.rewards[index].value);
                     // this.coinBar.currentLoad = this.coinBar.currentLoad + this.level.rewards[index].value
                     playSound(this.coinSound);
+                    console.log(this.allCoinsInLevel);
                     this.coinBar.currentLoad = this.coinBar.currentLoad + (1 / this.allCoinsInLevel) * 1000
                     console.log(this.coinBar.currentLoad);
                     
@@ -243,6 +244,9 @@ class World {
     coinCounter() {
         let coinsArray = this.level.rewards.filter(reward => reward instanceof Coin);
         this.allCoinsInLevel = coinsArray.length * 10;
+        if (!this.allCoinsInLevel) {
+            this.coinCounter();
+        }
         // console.log(this.allCoinsInLevel);
     }
 
