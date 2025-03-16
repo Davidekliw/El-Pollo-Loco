@@ -3,8 +3,6 @@ class StatusBar extends DrawableObject {
     x = 10;
     height = 40;
     width = 130;
-    // currentBottleLoad = 0;
-    // currentCoinLoad = 0;
     currentLoad = 0;
 
     IMG_STATUSBARCOINS = [
