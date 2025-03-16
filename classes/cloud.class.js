@@ -7,7 +7,7 @@ class Cloud extends MovableObject {
     constructor() {
         super().loadImage('./img/5_background/layers/4_clouds/1.png')
         this.x = 20 + Math.random() * 8000;
-        this.x = this.generateSpawnPointX(500, 2500);
+        this.x = this.generateSpawnPointX(500, 2200);
         this.loadImage
         this.y = 20 + Math.random() * 100;
         this.y = this.generateSpawnPointY(20, 150);
@@ -17,7 +17,7 @@ class Cloud extends MovableObject {
 
     animate() {
         let cloudInt = setInterval(() => {
-            if (this.x <= -100) {
+            if (this.x <= -650) {
                 window.clearInterval(cloudInt);
             }
             else {

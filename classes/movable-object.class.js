@@ -157,7 +157,7 @@ class MovableObject extends DrawableObject {
     generateSpawnPointX(minXCoordinate, maxXCoordinate) {
         // console.log(minXCoordinate, maxXCoordinate);
         // console.log(this.minXDistance);
-        let generateXCoordinate = Math.random() * 5000 + this.minXDistance;
+        let generateXCoordinate = Math.random() * maxXCoordinate + this.minXDistance;
         // console.log(generateXCoordinate);
         if (generateXCoordinate < maxXCoordinate && generateXCoordinate > minXCoordinate) {
             // this.xx = generateXCoordinate;
@@ -174,7 +174,7 @@ class MovableObject extends DrawableObject {
 
 
     generateSpawnPointY(minYCoordinate, maxYCoordinate) {
-        let generateYCoordinate = 0 + Math.random() * 500;
+        let generateYCoordinate = 0 + Math.random() * maxYCoordinate;
         // console.log(generateYCoordinate);
         if (generateYCoordinate < maxYCoordinate && generateYCoordinate > minYCoordinate) {
             // console.log(generateYCoordinate);

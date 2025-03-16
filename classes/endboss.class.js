@@ -140,7 +140,7 @@ class Endboss extends MovableObject {
         // console.log('es ist soweit');
         // console.log(this.world.level.max_XPosition - canvas.width);
         if (this.world.bottleBar.currentLoad <= 20) {
-            this.spawnBottle(this.level.level_end_x - 450, 320)
+            this.spawnBottle(this.world.level.level_end_x - 450, 320)
         }
         this.bossShowStatusBar();
         this.moveToLeft();
@@ -197,7 +197,7 @@ class Endboss extends MovableObject {
                 window.clearInterval(this.currentIntv);
                 this.loadImage(this.IMG_WALKING[1]);
                 this.otherDirection = false;
-                this.spawnBottle(this.level_end_x - 150, 320);
+                this.spawnBottle(this.world.level.level_end_x - 150, 320);
                 this.timeOutIntv = setTimeout(() => {
                     this.moveToLeft();
                 }, 1500);
