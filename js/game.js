@@ -107,35 +107,35 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
         e.preventDefault();
         keyboard.LEFT = true;
-    });
+    }, { passive: false });
     document.getElementById('btnLeft').addEventListener('touchend', (e) => {
         e.preventDefault();
         keyboard.LEFT = false;
-    });
+    }, { passive: false });
     document.getElementById('btnRight').addEventListener('touchstart', (e) => {
         e.preventDefault();
         keyboard.RIGHT = true;
-    });
+    }, { passive: false });
     document.getElementById('btnRight').addEventListener('touchend', (e) => {
         e.preventDefault();
         keyboard.RIGHT = false;
-    });
+    }, { passive: false });
     document.getElementById('btnJump').addEventListener('touchstart', (e) => {
         e.preventDefault();
         keyboard.SPACE = true;
-    });
+    }, { passive: false });
     document.getElementById('btnJump').addEventListener('touchend', (e) => {
         e.preventDefault();
         keyboard.SPACE = false;
-    });
+    }, { passive: false });
     document.getElementById('btnThrow').addEventListener('touchstart', (e) => {
         e.preventDefault();
         keyboard.KEYD = true;
-    });
+    }, { passive: false });
     document.getElementById('btnThrow').addEventListener('touchend', (e) => {
         e.preventDefault();
         keyboard.KEYD = false;
-    });
+    }, { passive: false });
 });
 
 
