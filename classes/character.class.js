@@ -217,7 +217,7 @@ class Character extends MovableObject {
                         this.playPictureAnimation(this.IMG_JUMPING);
                         this.timeSinceLastAction = performance.now();
                         // console.log('sprung');
-                    }, 150);
+                    }, 110);
                 }
             }
             else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isDeath) {
