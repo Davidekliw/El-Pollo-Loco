@@ -4,7 +4,7 @@
     font-family: 'Bungee Spice';
     font-style: normal;
     font-weight: 400;
-    src: url('../fonts/bungee-spice-v13-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    src: url('./fonts/bungee-spice-v13-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
   }
 
   /* luckiest-guy-regular - latin */
@@ -13,7 +13,7 @@
     font-family: 'Luckiest Guy';
     font-style: normal;
     font-weight: 400;
-    src: url('../fonts/luckiest-guy-v23-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    src: url('./fonts/luckiest-guy-v23-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
   }
 
   /* lilita-one-regular - latin */
@@ -22,5 +22,5 @@
     font-family: 'Lilita One';
     font-style: normal;
     font-weight: 400;
-    src: url('../fonts/lilita-one-v15-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    src: url('./fonts/lilita-one-v15-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
   }
