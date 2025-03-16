@@ -116,7 +116,7 @@ class Character extends MovableObject {
         // console.log(this.world.character.live);
         // console.log(damage);
 
-        this.world.character.live -= damage;
+        this.live -= damage;
         if (this.isEnoughLive()) {
             this.playPictureAnimation(this.IMG_HURT);
         } else {
