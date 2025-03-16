@@ -154,7 +154,7 @@ class Endboss extends MovableObject {
         this.currentIntv = setInterval(() => {
             this.playPictureAnimation(this.IMG_ALERT);
         }, 200);
-        setTimeout(() => {
+        this.timeOutIntv = setTimeout(() => {
             window.clearInterval(this.currentIntv);
             this.startBossAttack();
         }, 1500);
