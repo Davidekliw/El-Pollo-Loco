@@ -7,6 +7,12 @@ let soundEnabled = localStorage.getItem("soundEnabled") !== "false";
 const slider = document.getElementById("heavinessSlider");
 const output = document.getElementById("heavinessSliderValue");
 
+checkDevice();
+window.addEventListener("resize", checkDevice);
+
+/**
+ * used to toogle sound on / off
+ */
 if (soundEnabled === false) {
     toggleMuteAudio(soundEnabled);
 }
@@ -18,12 +24,18 @@ if (rewardsNeededToGetEndboss !== null) {
 
 slider.addEventListener("input", updateSlider);
 
+/**
+ * updates the number on the heaviness Slider on control menu
+ */
 function updateSlider() {
     output.textContent = slider.value;
     rewardsNeededToGetEndboss = slider.value;
     localStorage.setItem("heaviness", rewardsNeededToGetEndboss);
 }
 
+/**
+ * is used to check for mobile or Desktop device to toggle a user information
+ */
 function checkDevice() {
     let isMobile = /Mobi|iPhone|iPad|Android/i.test(navigator.userAgent);
     let isPortrait = window.innerHeight > window.innerWidth;
@@ -37,13 +49,19 @@ function checkDevice() {
     }
 }
 
-checkDevice();
-window.addEventListener("resize", checkDevice);
-
+/**
+ * is used to show the current Level Number on canvas
+ */
 function setLevelNbr() {
     document.getElementById('showLevelNbr').innerHTML = `Level ${levelNbr}`;
 }
 
+
+/**
+ * is used to initiat the level
+ * 
+ * @param {number} gameLevel - current Level Number
+ */
 function init(gameLevel) {
     document.getElementById('biggerScreen').style.display = "flex";
     document.getElementById('startScreen').style.display = "none";
@@ -55,17 +73,29 @@ function init(gameLevel) {
     }, 1500);
 }
 
+/**
+ * is used to rotate a image
+ * @param {string} id - is the ID of the selected element
+ */
 function toggleMenue(id) {
     let elem = document.getElementById(`${id}Img`);
     elem.classList.toggle("rotate90");
     toggleDisplay(id);
 }
 
+/**
+ * is used to toggle the dNone class on id element
+ * @param {string} id - is the ID of the selected element
+ */
 function toggleDisplay(id) {
     let elem = document.getElementById(id);
     elem.classList.toggle("dNone")
 }
 
+/**
+ * is used to set current sound state to local storage
+ * @param {boolean} state - true or false
+ */
 function toggleMuteAudio(state) {
     soundEnabled = state;
     localStorage.setItem("soundEnabled", soundEnabled);
@@ -73,6 +103,9 @@ function toggleMuteAudio(state) {
     toggleDisplay('disabledButton');
 }
 
+/**
+ * is used to toggle fullscreen
+ */
 function toggleFullScreen() {
     document.getElementById('btnNormal').classList.toggle("dNone");
     document.getElementById('btnWide').classList.toggle("dNone");
@@ -101,6 +134,9 @@ function toggleFullScreen() {
     }
 }
 
+/**
+ * is used to translate touch events into keyboard events
+ */
 document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("contextmenu", (e) => e.preventDefault());
 
@@ -138,7 +174,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { passive: false });
 });
 
-
+/**
+ * is there to respond to keyboard inputs
+ */
 document.addEventListener('keydown', (event) => {
     if (event.key == "ArrowLeft") {
         keyboard.LEFT = true;
@@ -160,6 +198,9 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
+/**
+ * is there to respond to keyboard events
+ */
 document.addEventListener('keyup', (event) => {
     if (event.key === "ArrowLeft") {
         keyboard.LEFT = false;
@@ -181,6 +222,11 @@ document.addEventListener('keyup', (event) => {
     }
 });
 
+/**
+ * is used to initate a audiofile
+ * @param {string} url - the path to the audio file
+ * @returns 
+ */
 function loadSound(url) {
     if (soundEnabled === true) {
         let sound = new Audio(url);
@@ -189,12 +235,20 @@ function loadSound(url) {
     return null;
 }
 
+/**
+ * used to set pause for the chosen sound
+ * @param {string} sound - the name of the variable to be paused
+ */
 function pauseSound(sound) {
     if (sound) {
         sound.pause();
     }
 }
 
+/**
+ * used to set play for the chosen sound
+ * @param {string} sound - the name of the variable to be displayed
+ */
 function playSound(sound) {
     if (sound) {
         sound.play();
