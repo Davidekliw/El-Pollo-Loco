@@ -75,34 +75,32 @@ class Endboss extends MovableObject {
         }, 2000);
     }
 
-    bossShowStatusBar() {
-        this.world.bossBar = new StatusBar(100, "IMG_STATUSBARBOSS", 45);
-        // console.log('starte statusbar');
+    animate() {
+        this.currentIntv = setInterval(() => {
+            if (this.world.coinBar.currentLoad >= rewardsNeededToGetEndboss - 1) {
+                window.clearInterval(this.currentIntv);
+                this.currentIntv = setInterval(() => {
+                    if (this.world.character.x >= 2200) {
+                        window.clearInterval(this.currentIntv);
+                        this.initEndFight();
+                    }
+                }, 200);
+            }
+        }, 1000);
     }
 
-
-    // isEnoughLive() {
-    //     if (this.live > 0) {
-    //         return true;
-    //     } else {
-    //         this.live <= 0;
-    //         return false;
-    //     }
-    // }
-
+    bossShowStatusBar() {
+        this.world.bossBar = new StatusBar(100, "IMG_STATUSBARBOSS", 45);
+    }
 
     getDamage(damage, index) {
         this.getAHit = true;
         this.otherDirection = false;
-
-        // console.log(damage);
         this.world.level.enemies[index].live -= damage;
         this.world.bossBar.setPercentage(this.world.level.enemies[index].live, "IMG_STATUSBARBOSS")
         window.clearInterval(this.currentIntv);
         window.clearTimeout(this.timeOutIntv);
         if (!this.isEnoughLive()) {
-            // console.log(`Nr: ${index} ist TOT.(${world.level.enemies[index].live} Leben)`);
-            // console.log(index);
             pauseSound(this.bossSound);
             pauseSound(this.attackBossSound);
             playSound(this.deadBossSound);
@@ -114,15 +112,12 @@ class Endboss extends MovableObject {
                 world.level.enemies.splice(index, 1);
                 window.clearInterval(this.currentIntv);
                 window.clearInterval(this.chickenInt);
-                // console.log(`Nummer ${this.chickenInt} wurde eliminiert`);
                 this.world.character.gameover("win");
             }, 2000);
         } else {
             playSound(this.chickenHitSound);
             this.currentIntv = setInterval(() => {
                 this.playPictureAnimation(this.IMG_HURT);
-                // console.log(this.world.bossBar.currentLoad);
-                // console.log(`Nr: ${index} hat noch ${world.level.enemies[index].live} Leben`);
             }, 200);
 
             setTimeout(() => {
@@ -131,7 +126,6 @@ class Endboss extends MovableObject {
                 this.loadImage(this.IMG_WALKING[1]);
                 pauseSound(this.chickenHitSound);
                 this.startBossAttack();
-                console.log('los gehts');
             }, 680);
         }
     }
@@ -140,8 +134,6 @@ class Endboss extends MovableObject {
         this.world.character.fixPosition = true;
         this.world.character.min_XPosition = 2150;
         this.world.camera_XMin = -2150;
-        // console.log('es ist soweit');
-        // console.log(this.world.level.max_XPosition - canvas.width);
         if (this.world.bottleBar.currentLoad <= 20) {
             this.spawnBottle(this.world.level.level_end_x - 450, 320)
         }
@@ -160,21 +152,13 @@ class Endboss extends MovableObject {
         }, 1500);
     }
 
-    // Animationenen beenden wenn es einen treffer gegeben hat
-
 
     moveToLeft() {
         this.currentIntv = setInterval(() => {
-            // console.log(`${this.x} < ${this.world.level.max_XPosition - this.width}`);
-            // console.log(this.world.level.max_XPosition - this.width);
-            // console.log(this.x);
-            // 2620
-            // console.log(this.x < (this.world.level.max_XPosition));
             if (this.x + this.width < this.world.level.level_end_x) {
                 window.clearInterval(this.currentIntv);
                 pauseSound(this.bossSound);
                 this.startAlert();
-                // this.loadImage(this.IMG_WALKING[1]);
             }
             else {
                 playSound(this.bossSound);
@@ -182,16 +166,11 @@ class Endboss extends MovableObject {
                 this.playPictureAnimation(this.IMG_WALKING);
             }
         }, 200);
-        // window.clearInterval(this.startBossInt);
     }
 
     spawnBottle(x, y) {
         let bottle = new Bottle(x, y);
         this.world.level.rewards.push(bottle);
-        // console.log("das ging");
-        // console.log(this.world.level.rewards);
-
-
     }
 
     moveBack() {
@@ -209,7 +188,6 @@ class Endboss extends MovableObject {
                 window.clearInterval(this.currentIntv);
                 this.otherDirection = false;
                 this.spawnBottle(this.level_end_x - 150, 320);
-                // this.playPictureAnimation(this.IMG_ATTACK);
             }
             else {
                 this.otherDirection = true;
@@ -217,7 +195,6 @@ class Endboss extends MovableObject {
                 this.playPictureAnimation(this.IMG_WALKING);
             }
         }, 200);
-        // window.clearInterval(this.startBossInt);
     }
 
 
@@ -227,56 +204,13 @@ class Endboss extends MovableObject {
             if (this.x >= 2300) {
                 this.playPictureAnimation(this.IMG_ATTACK);
                 this.moveLeft();
-                // console.log(this.x);
             }
             else {
-                // setTimeout(() => {
                 window.clearInterval(this.currentIntv);
-                // this.loadImage(this.IMG_WALKING[1]);
                 setTimeout(() => {
                     this.moveBack();
-                    // console.log(this.x);
                 }, 1000)
-                // }, 1500);
             }
         }, 100);
-    }
-
-    // in der Bottel klasse muss noch ein standardspawnpunkt hinterlegt werden.
-    // Instruktionen/ Regeln fürs Spiel auf dem Startbildschirm anzeigen
-    // Spawnpunkt für eine Flasche generieren.
-    // animation für angriff optimieren 
-    // Start Bildschirm anlegen
-    // Endbildschirm für erneuten start bzw. nach einer gewissen zeit automatisch auf den start screen weiterleiten
-
-    // Handyoptimierung
-
-
-
-    animate() {
-        this.currentIntv = setInterval(() => {
-            // console.log(this.world.coinBar.currentLoad, this.world.allCoinsInLevel);
-            if (this.world.coinBar.currentLoad >= rewardsNeededToGetEndboss - 1) {
-                console.log(`${this.world.coinBar.currentLoad} >= ${rewardsNeededToGetEndboss}`);
-                console.log(this.world.allCoinsInLevel);
-
-                // console.log("jetzt könnte man das level abschließen");
-                window.clearInterval(this.currentIntv);
-                this.currentIntv = setInterval(() => {
-                    // if (this.world) {
-                    // console.log(this.world.camera_x);
-                    // console.log(this.world.character.x);
-                    // console.log(this.world.character.min_XPosition = 2150);
-                    // console.log(this.world.coinBar.currentLoad);
-                    // animation starten. und camra_x einfrieren das sich bildschirm und character nicht mehr nach links bewegen lassen
-
-
-                    if (this.world.character.x >= 2200) {
-                        window.clearInterval(this.currentIntv);
-                        this.initEndFight();
-                    }
-                }, 200);
-            }
-        }, 1000);
     }
 }

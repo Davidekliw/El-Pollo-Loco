@@ -24,7 +24,6 @@ function updateSlider() {
     localStorage.setItem("heaviness", rewardsNeededToGetEndboss);
 }
 
-
 function checkDevice() {
     let isMobile = /Mobi|iPhone|iPad|Android/i.test(navigator.userAgent);
     let isPortrait = window.innerHeight > window.innerWidth;
@@ -41,30 +40,24 @@ function checkDevice() {
 checkDevice();
 window.addEventListener("resize", checkDevice);
 
-
 function setLevelNbr() {
     document.getElementById('showLevelNbr').innerHTML = `Level ${levelNbr}`;
 }
 
 function init(gameLevel) {
-    // document.getElementById('epl').classList.remove('dNone');
     document.getElementById('biggerScreen').style.display = "flex";
     document.getElementById('startScreen').style.display = "none";
-    // document.getElementById('startBtn').classList.remove('startBtn');
     canvas = document.getElementById('canvas');
     initLevel(gameLevel);
     setLevelNbr();
     setTimeout(() => {
         world = new World(canvas, keyboard);
     }, 1500);
-
-    // console.log('My Character is', world.character);
 }
 
 function toggleMenue(id) {
     let elem = document.getElementById(`${id}Img`);
     elem.classList.toggle("rotate90");
-    // elem.classList.toggle("closeMenue");
     toggleDisplay(id);
 }
 
@@ -88,11 +81,11 @@ function toggleFullScreen() {
     if (!document.fullscreenElement) {
         if (elem.requestFullscreen) {
             elem.requestFullscreen();
-        } else if (elem.mozRequestFullScreen) { // Firefox
+        } else if (elem.mozRequestFullScreen) {
             elem.mozRequestFullScreen();
-        } else if (elem.webkitRequestFullscreen) { // Chrome, Safari
+        } else if (elem.webkitRequestFullscreen) {
             elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) { // IE/Edge
+        } else if (elem.msRequestFullscreen) {
             elem.msRequestFullscreen();
         }
     } else {
@@ -108,78 +101,62 @@ function toggleFullScreen() {
     }
 }
 
-
 document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("contextmenu", (e) => e.preventDefault());
 
     document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
         e.preventDefault();
-        console.log("button Left was clicked");
         keyboard.LEFT = true;
     });
     document.getElementById('btnLeft').addEventListener('touchend', (e) => {
         e.preventDefault();
-        console.log("button Left was clicked");
         keyboard.LEFT = false;
     });
     document.getElementById('btnRight').addEventListener('touchstart', (e) => {
         e.preventDefault();
-        console.log("button Right was clicked");
         keyboard.RIGHT = true;
     });
     document.getElementById('btnRight').addEventListener('touchend', (e) => {
         e.preventDefault();
-        console.log("button Right was clicked");
         keyboard.RIGHT = false;
     });
     document.getElementById('btnJump').addEventListener('touchstart', (e) => {
         e.preventDefault();
-        console.log("button SPACE was clicked");
         keyboard.SPACE = true;
     });
     document.getElementById('btnJump').addEventListener('touchend', (e) => {
         e.preventDefault();
-        console.log("button SPACE was clicked");
         keyboard.SPACE = false;
     });
     document.getElementById('btnThrow').addEventListener('touchstart', (e) => {
         e.preventDefault();
-        console.log("button D was clicked");
         keyboard.KEYD = true;
     });
     document.getElementById('btnThrow').addEventListener('touchend', (e) => {
         e.preventDefault();
-        console.log("button D was clicked");
         keyboard.KEYD = false;
     });
 });
 
 
 document.addEventListener('keydown', (event) => {
-    // console.log(event);
     if (event.key == "ArrowLeft") {
         keyboard.LEFT = true;
-        // console.log("Left");
     }
     if (event.key == "ArrowRight") {
         keyboard.RIGHT = true;
-        // console.log("Right");
     }
     if (event.key == "ArrowUp") {
         keyboard.UP = true;
-        // console.log("Up");
     }
     if (event.key == "ArrowDown") {
         keyboard.DOWN = true;
-        // console.log("Down");
     }
     if (event.key == ' ') {
         keyboard.SPACE = true;
-        // console.log("Space");
     }
     if (event.key == 'd') {
         keyboard.KEYD = true;
-        // console.log("d");
     }
 });
 
@@ -221,21 +198,5 @@ function pauseSound(sound) {
 function playSound(sound) {
     if (sound) {
         sound.play();
-        // console.log(sound);
     }
 }
-
-
-
-// document.addEventListener('keyup', (event) => {
-//     // console.log(event);
-//     if (event.key === "ArrowLeft" || event.key === "ArrowRight" || event.key === "ArrowUp" || event.key === "ArrowDown" || event.key === "d" || event.key === " ") {
-//         keyboard.LEFT = false;
-//         keyboard.RIGHT = false;
-//         keyboard.UP = false;
-//         keyboard.DOWN = false;
-//         keyboard.SPACE = false;
-//         keyboard.KEYD = false;
-//         // console.log("all false");
-//     }
-// });

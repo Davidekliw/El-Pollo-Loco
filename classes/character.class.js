@@ -1,9 +1,6 @@
 class Character extends MovableObject {
 
     x = 50;
-    min_XPosition = -50;
-    max_XPosition = 2750;
-    fixPosition = false;
     y = 130;
     width = 140;
     height = 300;
@@ -11,13 +8,21 @@ class Character extends MovableObject {
     collidingFramey = 115;
     collidingFrameWidth = 120;
     collidingFrameHight = 285;
+    min_XPosition = -50;
+    max_XPosition = 2750;
+    fixPosition = false;
+    speed = this.speed * 80;
     live = 100;
     currentOnJump = false;
     isDeath = false;
     characterInterval = null;
     jumpInterval = null;
     gravityInterval = null;
+    animationTimer = null;
+    currentAnimation = "";
     timeSinceLastAction = performance.now();
+    walking_sound = loadSound('./audio/stepsshorter.mp3');
+    jump_sound = loadSound('./audio/jump.mp3');
 
 
     IMG_IDLE = [
@@ -83,12 +88,9 @@ class Character extends MovableObject {
         './img/2_character_pepe/5_dead/D-57.png'
     ];
 
-    speed = this.speed * 80;
 
     constructor() {
         super();
-        // console.log(this);
-
         this.loadImage('./img/2_character_pepe/1_idle/idle/I-1.png');
         this.loadImages(this.IMG_IDLE);
         this.loadImages(this.IMG_LONGIDLE);
@@ -96,106 +98,62 @@ class Character extends MovableObject {
         this.loadImages(this.IMG_JUMPING);
         this.loadImages(this.IMG_HURT);
         this.loadImages(this.IMG_DEAD);
-        // this.animate();
-        this.animationTimer = null;
-        this.currentAnimation = "";
         this.animateCharacter();
         this.applyGravity();
     }
 
-    // isEnoughLive() {
-    //     if (this.live > 0) {
-    //         return true;
-    //     } else {
-    //         this.live <= 0;
-    //         return false;
-    //     }
-    // }
-
     getDamage(damage) {
-        // console.log(this.world.character.live);
-        // console.log(damage);
-
         this.live -= damage;
         if (this.isEnoughLive()) {
             this.playPictureAnimation(this.IMG_HURT);
         } else {
             this.isDeath = true;
-            // console.log(this.isEnoughLive());
-
             this.jump();
-            // this.playPictureAnimation(this.IMG_DEAD);
         }
     }
 
     moveCamera() {
-        // console.log(this.world.camera_x + 100 <= this.max_XPosition - canvas.width);
-        // console.log(`${this.world.camera_x + this.collidingFrameWidth} <= ${-this.max_XPosition - -canvas.width}`);
-        // console.log(`${this.x - 220} <= ${this.max_XPosition - canvas.width}`);
-        // if (this.x - 220 <= this.max_XPosition - canvas.width) {
-        // console.log(`${this.x} >= ${this.world.camera_XMin} && ${this.x} < ${this.world.camera_XMax}`);
-        // console.log(`${this.x >= this.world.camera_XMin} && ${this.x < this.world.camera_XMax}`);
-
         if (this.world.camera_x > this.world.camera_XMax) {
             this.world.camera_x = -this.x + 100;
-            // console.log(this.world.camera_x);   
         }
         else if (this.world.camera_x < this.world.camera_XMax && this.otherDirection) {
-            // console.log(`${-this.x} < ${this.world.camera_XMax}`);
             if (-this.x <= this.world.camera_XMax - 100) {
-                // this.world.camera_x = -this.x + 100;
-                // this.world.camera_x = this.world.camera_x + 100;
-                // console.log('zweig 1');
             }
             else if (!this.fixPosition) {
                 this.world.camera_x = -this.x + 100;
-                // console.log(this.fixPosition);
-
-                // console.log('zweig 2');
             }
         }
     }
 
-
-    // walking_sound = new Audio('./audio/walking.mp3');
-    // walking_sound = new Audi('./audio/stepsOnSand.mp3');
-    // walking_sound = new Audio('./audio/stepsshorter.mp3');
-    walking_sound = loadSound('./audio/stepsshorter.mp3');
-    jump_sound = loadSound('./audio/jump.mp3');
+    gameover(gameoverReason) {
+        world.clearAllIntervals();
+        if (gameoverReason === "lose") {
+            world.gameover = new GameOver(world.camera_x);
+        }
+        else if (gameoverReason === "win") {
+            world.gameover = new GameWin(world.camera_x);
+        }
+    };
 
 
     animateCharacter() {
         setInterval(() => {
-            // console.log(soundEnabled);
             pauseSound(this.walking_sound);
-            // this.walking_sound.pause();
             if (this.world.keyboard.RIGHT && this.x < this.max_XPosition) {
                 this.moveRight();
                 this.otherDirection = false;
                 playSound(this.walking_sound);
             }
-
             if (this.world.keyboard.LEFT && !this.isDeath && this.x > this.min_XPosition) {
                 this.moveLeft();
                 this.otherDirection = true;
                 playSound(this.walking_sound);
             }
-
             this.moveCamera();
-            // console.log(this.isAboveGround());
-
-            // }, 1000 / 60);
-
-            // this.jumpInterval = setInterval(() => {
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 playSound(this.jump_sound);
                 this.jump();
             }
-            // }, 1000 / 60);
-            // console.log(this.isAboveGround()); // Testen, was zurückgegeben wird
-            // const self = this;
-
-            // const updateAnimation = () => {
             if (!this.isEnoughLive()) {
                 if (this.currentAnimation !== "DEAD") {
                     this.currentAnimation = "DEAD";
@@ -216,7 +174,6 @@ class Character extends MovableObject {
                     this.animationTimer = setInterval(() => {
                         this.playPictureAnimation(this.IMG_JUMPING);
                         this.timeSinceLastAction = performance.now();
-                        // console.log('sprung');
                     }, 110);
                 }
             }
@@ -227,7 +184,6 @@ class Character extends MovableObject {
                     this.animationTimer = setInterval(() => {
                         this.playPictureAnimation(this.IMG_WALKING);
                         this.timeSinceLastAction = performance.now();
-                        // console.log('laufen');
                     }, 100);
                 }
             }
@@ -237,7 +193,6 @@ class Character extends MovableObject {
                     clearInterval(this.animationTimer);
                     this.animationTimer = setInterval(() => {
                         this.playPictureAnimation(this.IMG_LONGIDLE);
-                        // console.log('Long Idle');
                     }, 500);
                 }
             }
@@ -247,140 +202,9 @@ class Character extends MovableObject {
                     clearInterval(this.animationTimer);
                     this.animationTimer = setInterval(() => {
                         this.playPictureAnimation(this.IMG_IDLE);
-                        // console.log('Idle');
                     }, 300);
                 }
             }
-
-            // requestAnimationFrame(updateAnimation);
-            // };
-
-            // updateAnimation();
         }, 1000 / 60);
     }
-
-
-    // animate() {
-    //     setInterval(() => {
-    //         this.walking_sound.pause();
-    //         if (this.world.keyboard.RIGHT && this.x < this.max_XPosition) {
-    //             this.moveRight();
-    //             this.otherDirection = false;
-    //             this.walking_sound.play();
-    //         }
-
-    //         if (this.world.keyboard.LEFT && this.x > -50) {
-    //             this.moveLeft();
-    //             this.otherDirection = true;
-    //             this.walking_sound.play();
-    //         }
-    //         this.world.camera_x = -this.x + 100;
-    //     }, 1000 / 60);
-
-    //     this.characterInterval = setInterval(() => {
-    //         if (!this.isEnoughLive() && this.y > 500) {
-    //             this.playPictureAnimation(this.IMG_DEAD);
-    //             this.gameover();
-    //             console.log('Spielende');
-    //         }
-    //         else if (this.isAboveGround() && this.isEnoughLive()) {
-    //             this.playPictureAnimation(this.IMG_JUMPING);
-    //             this.timeSinceLastAction = performance.now();
-    //             console.log('sprung');
-    //         }
-    //         else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-    //             this.playPictureAnimation(this.IMG_WALKING);
-    //             this.timeSinceLastAction = performance.now();
-    //             console.log('laufen');
-    //         }
-    //         else if (this.isUnderGround() && this.isTimeForLongIdle(this.timeSinceLastAction)) {
-    //             // this.currentOnJump = false;
-    //             this.playPictureAnimation(this.IMG_LONGIDLE);
-    //             console.log('Long Idle');
-    //         }
-    //         else if (this.isUnderGround() && !this.isTimeForLongIdle(this.timeSinceLastAction)) {
-    //             // this.currentOnJump = false;
-    //             this.playPictureAnimation(this.IMG_IDLE);
-    //             console.log('Idle');
-    //         }
-    //     }, 200);
-    //     console.log(this.characterInterval);
-
-
-    //     this.jumpInterval = setInterval(() => {
-    //         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-    //             this.jump();
-    //         }
-    //     }, 1000 / 60);
-    // }
-
-    gameover(gameoverReason) {
-        // console.log(this.character);
-        // console.log(this.jumpInterval);
-        // console.log(this.gravityInterval);
-        // console.log('ende');
-        // this.playPictureAnimation(this.IMG_DEAD);
-        // console.log(this.y);
-
-        // if (this.y > 500) {
-        // console.log(this.y);
-        // window.clearInterval(this.characterInterval);
-        // world.character = null;
-        // console.log('ende: interval gelöscht');
-        // console.log(this.jumpInterval);
-        // window.clearInterval(this.jumpInterval);
-        // console.log(this.gravityInterval);
-        // console.log(this.y);
-        // window.clearInterval(this.gravityInterval);
-        world.clearAllIntervals();
-        console.log(this.x, this.y);
-        console.log(gameoverReason);
-        if (gameoverReason === "lose") {
-            world.gameover = new GameOver(world.camera_x);
-        }
-        else if (gameoverReason === "win") {
-            world.gameover = new GameWin(world.camera_x);
-        }
-        // }
-    };
-
-    //     animate() {
-    //         this.characterInterval = setInterval(() => {
-    //             if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-    //                 this.walking_sound.pause();
-    //                 if (this.world.keyboard.RIGHT && this.x < this.max_XPosition) {
-    //                     this.moveRight();
-    //                     this.otherDirection = false;
-    //                     this.walking_sound.play();
-    //                 }
-
-    //                 if (this.world.keyboard.LEFT && this.x > -50) {
-    //                     this.moveLeft();
-    //                     this.otherDirection = true;
-    //                     this.walking_sound.play();
-    //                 }
-    //                 this.world.camera_x = -this.x + 100;
-    //                 this.playPictureAnimation(this.IMG_WALKING);
-    //                 this.timeSinceLastAction = Date.now();
-    //                 console.log('laufen');
-    //             }
-    //             else if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-    //                 this.jump();
-    //                 this.playPictureAnimation(this.IMG_JUMPING);
-    //                 this.timeSinceLastAction = Date.now();
-    //                 console.log('sprung');
-    //             }
-    //             else if (!this.isEnoughLive() && this.y > 500) {
-    //                 this.gameover();
-    //                 console.log('Spielende');
-    //             }
-    //             else {
-    //                 this.currentOnJump = false;
-    //                 this.playPictureAnimation(this.IMG_IDLE);
-    //                 console.log('Idle');
-    //             }
-    //         }, 1000 / 10);
-    //         console.log(this.characterInterval);
-    //     }
-    // }
 }

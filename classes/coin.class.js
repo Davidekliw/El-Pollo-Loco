@@ -22,7 +22,5 @@ class Coin extends Reward {
         this.loadImages(this.IMG_COIN);
         this.x = this.x + this.generateSpawnPointX(0, 1800);
         this.y = this.y + this.generateSpawnPointY(20, 300);
-        // console.log(this.x);
-        // console.log(this.y);
     }
 }

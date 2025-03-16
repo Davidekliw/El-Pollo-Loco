@@ -46,13 +46,6 @@ class StatusBar extends DrawableObject {
 
     constructor(percentage, link, initialY = -10) {
         super();
-        // this.loadImages(this.IMG_STATUSBARHEALTH);
-        // this.loadImages(this.IMG_STATUSBARBOTTLES);
-        // this.loadImages(this.IMG_STATUSBARCOINS);
-        // if (link === 'IMG_STATUSBARBOTTLES') {
-        //     console.log('das geht aber');
-        //     this.loadImages(this.IMG_STATUSBARBOTTLES);
-        // }
         if (link === 'IMG_STATUSBARHEALTH') this.loadImages(this.IMG_STATUSBARHEALTH);
         if (link === 'IMG_STATUSBARBOTTLES') this.loadImages(this.IMG_STATUSBARBOTTLES);
         if (link === 'IMG_STATUSBARCOINS') this.loadImages(this.IMG_STATUSBARCOINS);
@@ -60,19 +53,9 @@ class StatusBar extends DrawableObject {
             this.loadImages(this.IMG_STATUSBARBOSS);
             this.height = 60;
             this.width = 170;
-            // console.log(link);
-            // console.log(this.y);
             this.x = 540;
-            // console.log(this.x);
         }
-        // console.log(this.y);
         this.y = initialY;
-        // console.log(this.y);
-        // this.percentage = percentage;
-        // this.link = link;
         this.setPercentage(percentage, link);
-        // console.log(world.Character.speed);
-
     }
-
 }

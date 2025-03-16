@@ -36,7 +36,6 @@ class DrawableObject {
             ctx.rect(this.x, this.y, this.width, this.height);
             ctx.stroke();
             ctx.beginPath();
-            // console.log(this.x, this.y, this.width, this.height);
         }
     }
 
@@ -47,7 +46,6 @@ class DrawableObject {
             ctx.rect(this.x + this.collidingFramex, this.y + this.collidingFramey, this.collidingFrameWidth - this.collidingFramex, this.collidingFrameHight - this.collidingFramey);
             ctx.stroke();
             ctx.beginPath();
-            // console.log(this.x + this.collidingFramex, this.y + this.collidingFramey, this.collidingFrameWidth - this.collidingFramex, this.collidingFrameHight - this.collidingFramey);
         }
     }
 
@@ -55,14 +53,8 @@ class DrawableObject {
         if (this instanceof Character || this instanceof Chicken || this instanceof ThrowableObject || this instanceof Reward || this instanceof Endboss) {
             ctx.lineWidth = '1';
             ctx.strokeStyle = 'yellow';
-            // ctx.rect(this.x, this.y, 1, 1);
-            // ctx.rect(this.x + this.collidingFramex, this.y + this.collidingFramey, 1, 1);
-            // ctx.rect(this.x + this.collidingFrameWidth, this.y + this.collidingFrameHight, 1, 1);
-            // ctx.rect(this.x + this.collidingFramex,  this.y + this.collidingFramey, this.collidingFrameWidth, this.collidingFrameHight);
             ctx.stroke();
             ctx.beginPath();
-            // console.log(this.x, this.y, this.width, this.height);
-            // console.log(this.x, this.y + this.collidingFramey, this.collidingFrameWidth, this.collidingFrameHight);
         }
     }
 
@@ -72,16 +64,10 @@ class DrawableObject {
             ctx.fillStyle = "black";
             ctx.lineWidth = '1';
             ctx.strokeStyle = 'red';
-            // ctx.rect(this.x + 50,this.y + 50, 80, 60);
-            // ctx.moveTo(this.x - 100, 2)
-            // ctx.lineTo(this.x + 500, 2);
             ctx.fillText(this.world.camera_XMax, this.x + 70, this.y + 52);
             ctx.fillText(this.world.camera_x, this.x + 70, this.y + 65);
             ctx.fillText(this.world.camera_XMin, this.x + 70, this.y + 78);
             ctx.fillText(`x=${this.world.character.x}`, this.x + 70, this.y + 90);
-            // ctx.moveTo(this.x - 50, 0)
-            // ctx.lineTo(0, 400);
-            // ctx.fillText(this.y, this.x, this.y);
             ctx.stroke();
             ctx.beginPath();
         }
@@ -133,9 +119,6 @@ class DrawableObject {
 
 
     setPercentage(percentage, link) {
-        // this.percentage = percentage;
-        // console.log(percentage);
-        // this.link = link;
         let path;
         if (link == "IMG_STATUSBARHEALTH") {
             path = this.IMG_STATUSBARHEALTH[this.getRightPicture(percentage)];
@@ -154,7 +137,6 @@ class DrawableObject {
             path = this.IMG_STATUSBARBOSS[this.getRightPicture(percentage)];
             this.img = this.imageCache[path];
         }
-        // let path = this.link[this.getRightPicture(percentage)];
     }
 
     getRightPicture(condition) {
@@ -169,7 +151,6 @@ class DrawableObject {
         } else if (condition >= 15) {
             return 1;
         } else {
-            // console.log(`irgendwas anderes:${condition}`);
             return 0;
         }
     }

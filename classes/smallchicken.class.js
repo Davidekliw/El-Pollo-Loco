@@ -25,54 +25,36 @@ class SmallChicken extends MovableObject {
 
 
     constructor(levelSpeed) {
-        super()
+        super();
         this.loadImage(this.IMG_WALKING[0]);
         this.loadImages(this.IMG_WALKING);
         this.loadImages(this.IMG_DEAD);
-        this.x = 400 + Math.random() * 5000;
         this.x = this.generateSpawnPointX(600, 2200);
         this.speed = this.speed + Math.random() * levelSpeed;
         this.animate();
     }
 
-
-    // isEnoughLive() {
-    //     if (this.live > 0) {
-    //         return true;
-    //     } else {
-    //         this.live <= 0;
-    //         return false;
-    //     }
-    // }
-
-
     getDamage(damage, index) {
         world.level.enemies[index].live -= damage;
         if (!this.isEnoughLive()) {
-            // console.log(`Nr: ${index} hat noch ${world.level.enemies[index].live} Leben`);
-            // console.log(index);
             window.clearInterval(this.moveLeftInt);
             window.clearInterval(this.chickenInt);
             let smallChickenInt = setInterval(() => {
                 this.playPictureAnimation(this.IMG_DEAD);
                 playSound(this.chickenDeadSound);
-                // console.log('chickenintervall');
             }, 1000 / 60);
             setTimeout(() => {
                 window.clearInterval(smallChickenInt)
                 world.level.enemies.splice(index, 1);
-                // console.log(`Nummer ${this.chickenInt} wurde eliminiert`);
-
             }, 400);
-        } else {
-            // console.log(this.isEnoughLive());
-            console.log(`Nr: ${index} hat noch ${world.level.enemies[index].live} Leben`);
         }
     }
 
-
     animate() {
         this.moveLeftInt = setInterval(() => {
+            if (this.x < - 50) {
+                window.clearInterval(this.moveLeftInt);
+            }
             this.moveLeft();
         }, 1000 / 60);
 
@@ -83,6 +65,6 @@ class SmallChicken extends MovableObject {
                 world.level.enemies.splice(index, 1);
                 window.clearInterval(this.chickenInt);
             }
-        }, 500);
+        }, 300);
     }
 }

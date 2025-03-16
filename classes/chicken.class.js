@@ -35,22 +35,9 @@ class Chicken extends MovableObject {
         this.animate();
     }
 
-
-    // isEnoughLive() {
-    //     if (this.live > 0) {
-    //         return true;
-    //     } else {
-    //         this.live <= 0;
-    //         return false;
-    //     }
-    // }
-
-
     getDamage(damage, index) {
         world.level.enemies[index].live -= damage;
         if (!this.isEnoughLive()) {
-            // console.log(`Nr: ${index} hat noch ${world.level.enemies[index].live} Leben`);
-            // console.log(index);
             window.clearInterval(this.moveLeftInt);
             window.clearInterval(this.chickenInt);
             let chickenInt = setInterval(() => {
@@ -60,24 +47,17 @@ class Chicken extends MovableObject {
             setTimeout(() => {
                 window.clearInterval(chickenInt)
                 world.level.enemies.splice(index, 1);
-                // console.log(`Nummer ${this.chickenInt} wurde eliminiert`);
             }, 400);
         } else {
-            // console.log(this.isEnoughLive());
             playSound(this.chickenHitSound);
-            console.log(`Nr: ${index} hat noch ${world.level.enemies[index].live} Leben`);
         }
     }
 
-
-
-
-
-
-
-
     animate() {
         this.moveLeftInt = setInterval(() => {
+            if (this.x < - 50) {
+                window.clearInterval(this.moveLeftInt);
+            }
             this.moveLeft();
         }, 1000 / 60);
 

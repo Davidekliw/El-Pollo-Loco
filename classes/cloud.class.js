@@ -5,10 +5,11 @@ class Cloud extends MovableObject {
     minXDistance = 500;
 
     constructor() {
-        super().loadImage('./img/5_background/layers/4_clouds/1.png')
+        super();
+        this.loadImage('./img/5_background/layers/4_clouds/1.png')
+        this.loadImage
         this.x = 20 + Math.random() * 8000;
         this.x = this.generateSpawnPointX(500, 2200);
-        this.loadImage
         this.y = 20 + Math.random() * 100;
         this.y = this.generateSpawnPointY(20, 150);
         this.speed = this.speed + Math.random() * 0.6;

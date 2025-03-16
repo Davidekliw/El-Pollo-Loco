@@ -34,7 +34,5 @@ class Bottle extends Reward {
         this.loadImages(this.IMG_BOTTLE_SPLASH);
         this.x = x !== undefined ? x : this.generateSpawnPointX(0, 1800);
         this.y = y !== undefined ? y : this.generateSpawnPointY(10, 350);
-        // console.log(this.x);
-        // console.log(this.y);
     }
 }
