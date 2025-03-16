@@ -161,6 +161,7 @@ class Character extends MovableObject {
     // walking_sound = new Audi('./audio/stepsOnSand.mp3');
     // walking_sound = new Audio('./audio/stepsshorter.mp3');
     walking_sound = loadSound('./audio/stepsshorter.mp3');
+    jump_sound = loadSound('./audio/jump.mp3');
 
 
     animateCharacter() {
@@ -187,6 +188,7 @@ class Character extends MovableObject {
 
             // this.jumpInterval = setInterval(() => {
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+                playSound(this.jump_sound);
                 this.jump();
             }
             // }, 1000 / 60);

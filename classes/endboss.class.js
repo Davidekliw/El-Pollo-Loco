@@ -103,6 +103,8 @@ class Endboss extends MovableObject {
         if (!this.isEnoughLive()) {
             // console.log(`Nr: ${index} ist TOT.(${world.level.enemies[index].live} Leben)`);
             // console.log(index);
+            pauseSound(this.bossSound);
+            pauseSound(this.attackBossSound);
             playSound(this.deadBossSound);
             window.clearInterval(this.currentIntv);
             this.currentIntv = setInterval(() => {
@@ -127,6 +129,7 @@ class Endboss extends MovableObject {
                 window.clearInterval(this.currentIntv);
                 this.getAHit = false;
                 this.loadImage(this.IMG_WALKING[1]);
+                pauseSound(this.chickenHitSound);
                 this.startBossAttack();
                 console.log('los gehts');
             }, 680);
