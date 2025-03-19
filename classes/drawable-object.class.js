@@ -124,7 +124,6 @@ class DrawableObject {
             path = this.IMG_STATUSBARHEALTH[this.getRightPicture(percentage)];
             this.img = this.imageCache[path];
         }
-
         if (link == "IMG_STATUSBARBOTTLES") {
             path = this.IMG_STATUSBARBOTTLES[this.getRightPicture(percentage)];
             this.img = this.imageCache[path];
@@ -148,9 +147,9 @@ class DrawableObject {
             return 3;
         } else if (condition >= 35) {
             return 2;
-        } else if (condition >= 15) {
+        } else if (condition > 0) {
             return 1;
-        } else {
+        } else if (condition <= 0) {
             return 0;
         }
     }
