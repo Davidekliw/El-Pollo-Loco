@@ -4,10 +4,10 @@ class Endboss extends MovableObject {
     y = 100;
     width = 250;
     height = 350;
-    collidingFramex = 10;
-    collidingFramey = 50;
-    collidingFrameWidth = 240;
-    collidingFrameHight = 340;
+    collidingFramex = 40;
+    collidingFramey = 60;
+    collidingFrameWidth = 230;
+    collidingFrameHight = 330;
     makeDamage = 15;
     live;
     speed = 30.5;

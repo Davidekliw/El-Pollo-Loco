@@ -4,9 +4,9 @@ class Character extends MovableObject {
     y = 130;
     width = 140;
     height = 300;
-    collidingFramex = 20;
-    collidingFramey = 115;
-    collidingFrameWidth = 120;
+    collidingFramex = 30;
+    collidingFramey = 125;
+    collidingFrameWidth = 100;
     collidingFrameHight = 285;
     min_XPosition = -50;
     max_XPosition = 2750;
