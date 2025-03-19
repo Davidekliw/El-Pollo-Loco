@@ -62,7 +62,7 @@ function init(gameLevel) {
     setLevelNbr();
     setTimeout(() => {
         world = new World(canvas, keyboard);
-    }, 1500);
+    }, 1000);
 }
 
 /**
