@@ -9,7 +9,6 @@ class ThrowableObject extends MovableObject {
     collidingFrameHight = 70;
     throwableObjectIntv;
     isUsed = false;
-    throwSound = loadSound('./audio/bumerang.mp3')
     splashIntv;
 
     IMG_BOTTLES = [
@@ -84,7 +83,7 @@ class ThrowableObject extends MovableObject {
     }
 
     throw() {
-        playSound(this.throwSound);
+        playSound('throwSound');
         this.checkThrowDirection();
         this.throwableObjectIntv = setInterval(() => {
             this.checkBottleCollision();
@@ -97,7 +96,7 @@ class ThrowableObject extends MovableObject {
                 world.throwableObjects.splice(0);
                 world.bottleBar.currentLoad = world.bottleBar.currentLoad - (1 / world.allBottlesInLevel) * 1000;
                 world.bottleBar.setPercentage(world.bottleBar.currentLoad, "IMG_STATUSBARBOTTLES");
-                pauseSound(this.throwSound);
+                pauseSound('throwSound');
                 window.clearInterval(this.throwableObjectIntv);
             }
         }, 40);

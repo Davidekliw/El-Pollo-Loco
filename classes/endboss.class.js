@@ -14,10 +14,6 @@ class Endboss extends MovableObject {
     startBossInt;
     getAHit = false;
     timeOutIntv;
-    bossSound = loadSound('./audio/bossSound.mp3');
-    deadBossSound = loadSound('./audio/deadBoss.mp3');
-    attackBossSound = loadSound('./audio/bossAttack.mp3');
-
 
     IMG_WALKING = [
         './img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -101,9 +97,9 @@ class Endboss extends MovableObject {
         window.clearInterval(this.currentIntv);
         window.clearTimeout(this.timeOutIntv);
         if (!this.isEnoughLive()) {
-            pauseSound(this.bossSound);
-            pauseSound(this.attackBossSound);
-            playSound(this.deadBossSound);
+            pauseSound('bossSound');
+            pauseSound('attackBossSound');
+            playSound('deadBossSound');
             window.clearInterval(this.currentIntv);
             this.currentIntv = setInterval(() => {
                 this.playPictureAnimation(this.IMG_DEAD);
@@ -115,7 +111,7 @@ class Endboss extends MovableObject {
                 this.world.character.gameover("win");
             }, 2000);
         } else {
-            playSound(this.chickenHitSound);
+            playSound('chickenHitSound');
             this.currentIntv = setInterval(() => {
                 this.playPictureAnimation(this.IMG_HURT);
             }, 200);
@@ -124,7 +120,7 @@ class Endboss extends MovableObject {
                 window.clearInterval(this.currentIntv);
                 this.getAHit = false;
                 this.loadImage(this.IMG_WALKING[1]);
-                pauseSound(this.chickenHitSound);
+                pauseSound('chickenHitSound');
                 this.startBossAttack();
             }, 680);
         }
@@ -157,11 +153,11 @@ class Endboss extends MovableObject {
         this.currentIntv = setInterval(() => {
             if (this.x + this.width < this.world.level.level_end_x) {
                 window.clearInterval(this.currentIntv);
-                pauseSound(this.bossSound);
+                pauseSound('bossSound');
                 this.startAlert();
             }
             else {
-                playSound(this.bossSound);
+                playSound('bossSound');
                 this.moveLeft();
                 this.playPictureAnimation(this.IMG_WALKING);
             }
@@ -199,7 +195,7 @@ class Endboss extends MovableObject {
 
 
     startBossAttack() {
-        playSound(this.attackBossSound);
+        playSound('attackBossSound');
         this.currentIntv = setInterval(() => {
             if (this.x >= 2300) {
                 this.playPictureAnimation(this.IMG_ATTACK);

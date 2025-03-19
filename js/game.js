@@ -2,20 +2,12 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let rewardsNeededToGetEndboss = localStorage.getItem("heaviness") ?? 50;
-let soundEnabled = localStorage.getItem("soundEnabled") !== "false";
 
 const slider = document.getElementById("heavinessSlider");
 const output = document.getElementById("heavinessSliderValue");
 
 checkDevice();
 window.addEventListener("resize", checkDevice);
-
-/**
- * used to toogle sound on / off
- */
-if (soundEnabled === false) {
-    toggleMuteAudio(soundEnabled);
-}
 
 if (rewardsNeededToGetEndboss !== null) {
     document.getElementById("heavinessSlider").value = rewardsNeededToGetEndboss;
@@ -90,17 +82,6 @@ function toggleMenue(id) {
 function toggleDisplay(id) {
     let elem = document.getElementById(id);
     elem.classList.toggle("dNone")
-}
-
-/**
- * is used to set current sound state to local storage
- * @param {boolean} state - true or false
- */
-function toggleMuteAudio(state) {
-    soundEnabled = state;
-    localStorage.setItem("soundEnabled", soundEnabled);
-    toggleDisplay('enabledButton');
-    toggleDisplay('disabledButton');
 }
 
 /**
@@ -221,36 +202,3 @@ document.addEventListener('keyup', (event) => {
         keyboard.KEYD = false;
     }
 });
-
-/**
- * is used to initate a audiofile
- * @param {string} url - the path to the audio file
- * @returns 
- */
-function loadSound(url) {
-    if (soundEnabled === true) {
-        let sound = new Audio(url);
-        return sound;
-    }
-    return null;
-}
-
-/**
- * used to set pause for the chosen sound
- * @param {string} sound - the name of the variable to be paused
- */
-function pauseSound(sound) {
-    if (sound) {
-        sound.pause();
-    }
-}
-
-/**
- * used to set play for the chosen sound
- * @param {string} sound - the name of the variable to be displayed
- */
-function playSound(sound) {
-    if (sound) {
-        sound.play();
-    }
-}

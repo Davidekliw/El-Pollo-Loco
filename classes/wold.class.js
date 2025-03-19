@@ -16,9 +16,6 @@ class World {
     throwableObjects = [];
     allBottlesInLevel;
     allCoinsInLevel;
-    coinSound = loadSound('./audio/coin.mp3');
-    bottleSound = loadSound('./audio/bottle.mp3');
-
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -84,11 +81,13 @@ class World {
         this.level.rewards.forEach((obj, index) => {
             if (this.character.isColliding(obj)) {
                 if (this.level.rewards[index] instanceof Bottle) {
-                    playSound(this.bottleSound);
+                    pauseSound('bottleSound');
+                    playSound('bottleSound');
                     this.bottleBar.currentLoad = this.bottleBar.currentLoad + this.level.rewards[index].value
                     this.bottleBar.setPercentage(this.bottleBar.currentLoad, "IMG_STATUSBARBOTTLES");
                 } else if (this.level.rewards[index] instanceof Coin) {
-                    playSound(this.coinSound);
+                    pauseSound('coinSound');
+                    playSound('coinSound');
                     this.coinBar.currentLoad = this.coinBar.currentLoad + (1 / this.allCoinsInLevel) * 1000
                     this.coinBar.setPercentage(this.coinBar.currentLoad, "IMG_STATUSBARCOINS");
                 } else {

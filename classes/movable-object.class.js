@@ -5,9 +5,6 @@ class MovableObject extends DrawableObject {
     speedY = 0;
     acceleration = 2.5;
     testzaehler;
-    chickenDeadSound = loadSound('./audio/deadChicken.mp3');
-    chickenHitSound = loadSound('./audio/oneHit.mp3');
-
 
     constructor() {
         super();

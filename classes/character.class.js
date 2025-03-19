@@ -21,9 +21,6 @@ class Character extends MovableObject {
     animationTimer = null;
     currentAnimation = "";
     timeSinceLastAction = performance.now();
-    walking_sound = loadSound('./audio/stepsshorter.mp3');
-    jump_sound = loadSound('./audio/jump.mp3');
-
 
     IMG_IDLE = [
         './img/2_character_pepe/1_idle/idle/I-1.png',
@@ -138,20 +135,24 @@ class Character extends MovableObject {
 
     animateCharacter() {
         setInterval(() => {
-            pauseSound(this.walking_sound);
+            // pauseSound('characterWalking');
             if (this.world.keyboard.RIGHT && this.x < this.max_XPosition) {
                 this.moveRight();
                 this.otherDirection = false;
-                playSound(this.walking_sound);
+                if (!this.isAboveGround()) {
+                    playSound('characterWalking');
+                }
             }
             if (this.world.keyboard.LEFT && !this.isDeath && this.x > this.min_XPosition) {
                 this.moveLeft();
                 this.otherDirection = true;
-                playSound(this.walking_sound);
+                if (!this.isAboveGround()) {
+                    playSound('characterWalking');
+                }
             }
             this.moveCamera();
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-                playSound(this.jump_sound);
+                playSound('characterJump');
                 this.jump();
             }
             if (!this.isEnoughLive()) {
