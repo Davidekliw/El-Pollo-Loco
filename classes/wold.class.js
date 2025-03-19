@@ -30,6 +30,18 @@ class World {
         }, 1000);
     }
 
+    backgroundSoundLoop() {
+        if (soundEnabled && soundsLib['backgroundMusic'].paused) {
+            playSound('backgroundMusic');
+        }
+        let backgroundMusicIntv = setInterval(() => {
+            if (soundEnabled && soundsLib['backgroundMusic'].paused) {
+                this.backgroundSoundLoop();
+                window.clearInterval(backgroundMusicIntv);
+            }
+        }, 1000);
+    }
+
     startGameLoop() {
         if (this.gameLoopInt) {
             cancelAnimationFrame(this.gameLoopInt);
