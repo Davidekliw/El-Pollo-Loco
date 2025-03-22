@@ -67,9 +67,20 @@ class MovableObject extends DrawableObject {
         return elapsedTime > wastetTime;
     }
 
+    characterIsAboveEnemy(obj) {
+        if (this.y + this.height < obj.y && this.x + this.width > obj.x && this.x < obj.x + obj.width) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     isColliding(obj) {
         if (this.x + this.collidingFrameWidth > obj.x + obj.collidingFramex && this.x + this.collidingFramex < obj.x + obj.collidingFrameWidth && this.y + this.collidingFramey < obj.y + obj.collidingFrameHight && this.y + this.collidingFrameHight > obj.y + obj.collidingFramey) {
             return true;
+        } else {
+            return false;
         }
     }
 

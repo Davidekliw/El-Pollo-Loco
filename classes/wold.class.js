@@ -66,7 +66,7 @@ class World {
 
     update() {
         this.throwableObject();
-        !this.character.isDeath && this.checkCollisions();
+        !this.character.isDeath && this.checkHitEnemyFromAbove();
         !this.character.isDeath && this.checkObjectCollisions();
     };
 
@@ -80,9 +80,20 @@ class World {
         }
     }
 
-    checkCollisions() {
-        this.level.enemies.forEach((obj) => {
-            if (this.character.isColliding(obj) && !this.character?.isDeath) {
+    checkHitEnemyFromAbove() {
+        this.level.enemies.forEach((obj, index) => {
+            this.isAboveEnemy = this.character.characterIsAboveEnemy(obj);
+            if (this.isAboveEnemy || obj.hitIsInProgress) {
+                obj.hitIsInProgress = true;
+                if (!this.character?.isDeath && this.character.isColliding(obj)) {
+                    obj.getDamage(obj.live, index);
+                    obj.hitIsInProgress = false;
+                }
+                else if (!this.character.isAboveGround()) {
+                    obj.hitIsInProgress = false;
+                }
+            }
+            else if (!obj.hitIsInProgress && obj.live > 0 && !this.character?.isDeath && this.character.isColliding(obj)) {
                 this.character.getDamage(obj.makeDamage);
                 this.healthBar.setPercentage(this.character.live, "IMG_STATUSBARHEALTH");
             }
@@ -118,7 +129,7 @@ class World {
 
         this.addObjectsToMap(this.level.backgroundObjs);
 
-        this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.enemies.filter(enemy => enemy.isDeath === false));
 
         this.addObjectsToMap(this.level.clouds);
 
