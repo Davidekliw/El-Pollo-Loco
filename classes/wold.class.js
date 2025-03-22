@@ -23,6 +23,7 @@ class World {
         this.keyboard = keyboard;
         this.setWorld();
         this.startGameLoop();
+        this.backgroundSoundLoop();
         setTimeout(() => {
             this.setWorld();
             this.coinCounter();
