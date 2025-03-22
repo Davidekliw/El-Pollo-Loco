@@ -10,6 +10,7 @@ class Endboss extends MovableObject {
     collidingFrameHight = 330;
     makeDamage = 15;
     live;
+    isDeath = false;
     speed = 30.5;
     startBossInt;
     getAHit = false;

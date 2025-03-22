@@ -10,6 +10,8 @@ class Chicken extends MovableObject {
     minXDistance = 600;
     makeDamage = 2;
     live = 21;
+    isDeath = false;
+    hitIsInProgress = false;
     chickenInt;
     moveLeftInt;
 
