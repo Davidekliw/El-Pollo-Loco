@@ -34,22 +34,6 @@ class SmallChicken extends MovableObject {
         this.animate();
     }
 
-    // getDamage(damage, index) {
-    //     world.level.enemies[index].live -= damage;
-    //     if (!this.isEnoughLive()) {
-    //         window.clearInterval(this.moveLeftInt);
-    //         window.clearInterval(this.chickenInt);
-    //         let smallChickenInt = setInterval(() => {
-    //             this.playPictureAnimation(this.IMG_DEAD);
-    //             playSound('chickenDeadSound');
-    //         }, 1000 / 60);
-    //         setTimeout(() => {
-    //             window.clearInterval(smallChickenInt)
-    //             world.level.enemies.splice(index, 1);
-    //         }, 400);
-    //     }
-    // }
-
     animate() {
         this.moveLeftInt = setInterval(() => {
             if (this.x < - 50) {
