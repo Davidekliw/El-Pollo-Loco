@@ -50,6 +50,6 @@ animate() {
                 world.level.enemies.splice(index, 1);
                 window.clearInterval(this.chickenInt);
             }
-        }, 500);
+        }, 300);
     }
 }
