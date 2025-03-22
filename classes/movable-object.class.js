@@ -93,4 +93,22 @@ class MovableObject extends DrawableObject {
         }
     }
 
+    getDamage(damage, index) {
+        world.level.enemies[index].live -= damage;
+        if (!this.isEnoughLive()) {
+            window.clearInterval(this.moveLeftInt);
+            window.clearInterval(this.chickenInt);
+            let chickenInt = setInterval(() => {
+                this.playPictureAnimation(this.IMG_DEAD);
+                playSound('chickenDeadSound');
+            }, 1000 / 60);
+            setTimeout(() => {
+                window.clearInterval(chickenInt)
+                // world.level.enemies.splice(index, 1);
+                world.level.enemies[index].isDeath = true;
+            }, 400);
+        } else {
+            playSound('chickenHitSound');
+        }
+    }
 }
