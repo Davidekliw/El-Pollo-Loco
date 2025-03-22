@@ -14,6 +14,7 @@ class World {
     coinBar = new StatusBar(0, "IMG_STATUSBARCOINS", 50);
     bossBar;
     throwableObjects = [];
+    isAboveEnemy = false;
     allBottlesInLevel;
     allCoinsInLevel;
 
