@@ -183,7 +183,7 @@ class Endboss extends MovableObject {
             else if (this.getAHit) {
                 window.clearInterval(this.currentIntv);
                 this.otherDirection = false;
-                this.spawnBottle(this.level_end_x - 150, 320);
+                this.spawnBottle(this.world.level.level_end_x - 150, 320);
             }
             else {
                 this.otherDirection = true;
