@@ -45,6 +45,15 @@ function muteSound(state) {
 }
 
 /**
+ * is used to set all sounds to pause
+ */
+function pauseAllSounds() {
+    Object.values(soundsLib).forEach(sound => {
+        sound.pause();
+    });
+}
+
+/**
  * used to set pause for the chosen sound
  * @param {string} name - the name of the sound to be paused
  */
