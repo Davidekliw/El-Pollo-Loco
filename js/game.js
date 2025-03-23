@@ -7,7 +7,11 @@ const slider = document.getElementById("heavinessSlider");
 const output = document.getElementById("heavinessSliderValue");
 
 checkDevice();
-window.addEventListener("resize", checkDevice);
+checkTouchDevice();
+window.addEventListener("resize", () => {
+    checkDevice();
+    checkTouchDevice();
+});
 
 if (rewardsNeededToGetEndboss !== null) {
     document.getElementById("heavinessSlider").value = rewardsNeededToGetEndboss;
@@ -23,6 +27,15 @@ function updateSlider() {
     output.textContent = slider.value;
     rewardsNeededToGetEndboss = slider.value;
     localStorage.setItem("heaviness", rewardsNeededToGetEndboss);
+}
+
+function checkTouchDevice() {
+    let bottomContainer = document.getElementById('btnContainerBottom')
+    if (window.matchMedia("(pointer: coarse)").matches) {
+        bottomContainer.style.display = "flex";
+    } else {
+        bottomContainer.style.display = "none";
+    }
 }
 
 /**
