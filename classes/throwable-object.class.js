@@ -57,7 +57,7 @@ class ThrowableObject extends MovableObject {
     checkBottleCollision() {
         world.level.enemies.forEach((enemy, index) => {
             let hit = world.throwableObjects.some((throwableObject) => throwableObject?.isColliding(enemy));
-            if (!this.isUsed && hit) {
+            if (!this.isUsed && !enemy.isDeath && hit) {
                 this.isUsed = true;
                 world.level.enemies[index].getDamage(Bottle.makeDamage, index);
             }
