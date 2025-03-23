@@ -136,14 +136,14 @@ class Character extends MovableObject {
     animateCharacter() {
         setInterval(() => {
             // pauseSound('characterWalking');
-            if (this.world.keyboard.RIGHT && this.x < this.max_XPosition) {
+            if (keyboard.RIGHT && this.x < this.max_XPosition) {
                 this.moveRight();
                 this.otherDirection = false;
                 if (!this.isAboveGround()) {
                     playSound('characterWalking');
                 }
             }
-            if (this.world.keyboard.LEFT && !this.isDeath && this.x > this.min_XPosition) {
+            if (keyboard.LEFT && !this.isDeath && this.x > this.min_XPosition) {
                 this.moveLeft();
                 this.otherDirection = true;
                 if (!this.isAboveGround()) {
@@ -151,9 +151,10 @@ class Character extends MovableObject {
                 }
             }
             this.moveCamera();
-            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+            if (keyboard.SPACE && !this.isAboveGround()) {
                 playSound('characterJump');
                 this.jump();
+                keyboard.SPACE = false;
             }
             if (!this.isEnoughLive()) {
                 if (this.currentAnimation !== "DEAD") {

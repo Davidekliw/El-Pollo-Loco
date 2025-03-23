@@ -37,7 +37,6 @@ function toggleMuteAudio(state) {
 /**
  * is used to set all sounds to on or off
  * @param {boolean} state - true its for sound off and false for sound is on 
- * @returns the new audio instance
  */
 function muteSound(state) {
     Object.values(soundsLib).forEach(sound => {

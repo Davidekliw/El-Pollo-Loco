@@ -39,6 +39,12 @@ b {
     color: #ff8400;
 }
 
+p {
+    font-size: 40px;
+    font-weight: 900;
+    color: orange;
+}
+
 a:hover {
     color: #894701;
 }
@@ -53,6 +59,18 @@ a:hover {
 
 .noScroll {
     overflow: hidden;
+}
+
+.landscapeScreen {
+    display: none;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
 .startScreen {
@@ -246,11 +264,23 @@ canvas {
     align-items: center;
 }
 
+.colorChanger {
+    filter: invert(52%) sepia(93%) saturate(1000%) hue-rotate(1deg) brightness(100%);
+}
+
 .blocks {
     display: flex;
     align-items: center;
     padding: 8px 16px;
     gap: 24px;
+}
+
+#showLevelNbr {
+    font-size: 30px !important;
+    font-weight: bold;
+    color: orange;
+    opacity: 1;
+    animation: levelAnimation 2s ease-out forwards;
 }
 
 .btnContainerBottom {
@@ -272,36 +302,19 @@ canvas {
     border-radius: 8px;
 }
 
-.colorChanger {
-    filter: invert(52%) sepia(93%) saturate(1000%) hue-rotate(1deg) brightness(100%);
-}
-
-p {
-    font-size: 40px;
-    font-weight: 900;
-    color: orange;
-}
-
-.landscapeScreen {
+.gameOverInterface {
     display: none;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 20px;
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 2;
-    background-color: rgba(0, 0, 0, 0.8);
-}
-
-#showLevelNbr {
-    /* top: 0; */
-    /* right: 0; */
-    font-size: 30px !important;
-    font-weight: bold;
-    color: orange;
-    opacity: 1;
-    animation: levelAnimation 2s ease-out forwards;
+    background-color: rgba(0, 0, 0, 0.9);
 }
 
 @keyframes levelAnimation {
@@ -328,20 +341,11 @@ p {
     75% {
         font-size: 120%;
     }
+
     100% {
         font-size: 100%;
     }
 }
-
-/* @media only screen and (min-width: 1920px) {
-    body {
-        font-size: 64px;
-    }
-    .gamePlayButtons {
-        width: 160px;
-        height: 160px;
-    }
-} */
 
 @media only screen and (max-width: 500px) {
     .gamePlayButtons {
@@ -354,6 +358,7 @@ p {
     #showLevelNbr {
         font-size: 20px !important;
     }
+
     .gamePlayButtons {
         width: 30px;
         height: 30px;
