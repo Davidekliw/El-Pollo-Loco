@@ -174,6 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener('keydown', (event) => {
     if (event.key == "ArrowLeft") {
         keyboard.LEFT = true;
+        keyboard.Right = false;
     }
     if (event.key == "ArrowRight") {
         keyboard.RIGHT = true;
