@@ -1,11 +1,11 @@
 class ThrowableObject extends MovableObject {
 
 
-    width = 80;
+    width = 60;
     height = 80;
-    collidingFramex = 10;
-    collidingFramey = 10;
-    collidingFrameWidth = 70;
+    collidingFramex = 15;
+    collidingFramey = 15;
+    collidingFrameWidth = 45;
     collidingFrameHight = 70;
     throwableObjectIntv;
     isUsed = false;

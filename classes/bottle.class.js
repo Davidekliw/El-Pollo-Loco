@@ -6,9 +6,9 @@ class Bottle extends Reward {
     y = 10;
     width = 60;
     height = 80;
-    collidingFramex = 10;
-    collidingFramey = 10;
-    collidingFrameWidth = 50;
+    collidingFramex = 15;
+    collidingFramey = 15;
+    collidingFrameWidth = 45;
     collidingFrameHight = 70;
     value = Bottle.value;
 

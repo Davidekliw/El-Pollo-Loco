@@ -4,10 +4,10 @@ class Coin extends Reward {
     y = 10;
     width = 140;
     height = 140;
-    collidingFramex = 45;
-    collidingFramey = 45;
-    collidingFrameWidth = 95;
-    collidingFrameHight = 95;
+    collidingFramex = 50;
+    collidingFramey = 50;
+    collidingFrameWidth = 90;
+    collidingFrameHight = 90;
     value = 10;
 
 
