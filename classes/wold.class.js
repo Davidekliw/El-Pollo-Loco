@@ -85,7 +85,7 @@ class World {
     checkHitEnemyFromAbove() {
         this.level.enemies.forEach((obj, index) => {
             this.isAboveEnemy = this.character.characterIsAboveEnemy(obj);
-            if (this.isAboveEnemy || obj.hitIsInProgress) {
+            if (!obj.isDeath && this.isAboveEnemy || obj.hitIsInProgress) {
                 obj.hitIsInProgress = true;
                 if (!this.character?.isDeath && this.character.isColliding(obj)) {
                     obj.getDamage(obj.live, index);
