@@ -70,12 +70,22 @@ function setLevelNbr() {
 function init(gameLevel) {
     document.getElementById('biggerScreen').style.display = "flex";
     document.getElementById('startScreen').style.display = "none";
+    document.getElementById('gameOverInterface').style.display = "none";
     canvas = document.getElementById('canvas');
     initLevel(gameLevel);
     setLevelNbr();
     setTimeout(() => {
         world = new World(canvas, keyboard);
     }, 1000);
+}
+
+/**
+ * is used to toggle containers on the index.html to show the start screen
+ */
+function loadStartScreen() {
+    document.getElementById('biggerScreen').style.display = "none";
+    document.getElementById('startScreen').style.display = "flex";
+    document.getElementById('gameOverInterface').style.display = "none";
 }
 
 /**

@@ -19,7 +19,18 @@ class GameOver extends MovableObject {
 
         setTimeout(() => {
             cancelAnimationFrame(world.gameLoopInt);
-            window.location.reload();
+            world.clearAllIntervals();
+            pauseAllSounds();
+            this.showGameOverInterface();
+            this.clearCanvas();
         }, 2000);
+    }
+
+    clearCanvas() {
+        world.ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    showGameOverInterface() {
+        document.getElementById('gameOverInterface').style.display = "flex";
     }
 }

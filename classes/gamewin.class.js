@@ -21,6 +21,8 @@ class GameWin extends MovableObject {
         this.loadImages(this.IMG_GAMEWINSCREEN);
         setTimeout(() => {
             cancelAnimationFrame(world.gameLoopInt);
+            world.clearAllIntervals();
+            pauseAllSounds();
             init(++levelNbr);
         }, 1500);
     }
