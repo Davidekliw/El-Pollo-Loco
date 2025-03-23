@@ -30,6 +30,7 @@ class ThrowableObject extends MovableObject {
 
     constructor(x, y) {
         super();
+        keyboard.KEYD = false;
         this.x = x;
         this.y = y;
         this.loadImage(this.IMG_BOTTLES[0]);
