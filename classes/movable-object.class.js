@@ -115,7 +115,6 @@ class MovableObject extends DrawableObject {
             }, 1000 / 60);
             setTimeout(() => {
                 window.clearInterval(chickenInt)
-                // world.level.enemies.splice(index, 1);
                 world.level.enemies[index].isDeath = true;
             }, 400);
         } else {
