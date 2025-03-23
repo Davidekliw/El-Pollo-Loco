@@ -108,7 +108,6 @@ class Endboss extends MovableObject {
             setTimeout(() => {
                 world.level.enemies.splice(index, 1);
                 window.clearInterval(this.currentIntv);
-                window.clearInterval(this.chickenInt);
                 this.world.character.gameover("win");
             }, 2000);
         } else {
