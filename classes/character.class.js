@@ -15,10 +15,15 @@ class Character extends MovableObject {
     live = 100;
     currentOnJump = false;
     isDeath = false;
-    characterInterval = null;
-    jumpInterval = null;
-    gravityInterval = null;
-    animationTimer = null;
+
+    /**
+    * @param {number} - is used to save the current interval Number.
+    */
+    animationTimerIntvNbr = null;
+
+    /**
+    * @param {string} - is used to save the name of the current animation.
+    */
     currentAnimation = "";
     timeSinceLastAction = performance.now();
 
@@ -135,7 +140,6 @@ class Character extends MovableObject {
 
     animateCharacter() {
         setInterval(() => {
-            // pauseSound('characterWalking');
             if (keyboard.RIGHT && this.x < this.max_XPosition) {
                 this.moveRight();
                 this.otherDirection = false;
@@ -159,8 +163,8 @@ class Character extends MovableObject {
             if (!this.isEnoughLive()) {
                 if (this.currentAnimation !== "DEAD") {
                     this.currentAnimation = "DEAD";
-                    clearInterval(this.animationTimer);
-                    this.animationTimer = setInterval(() => {
+                    clearInterval(this.animationTimerIntvNbr);
+                    this.animationTimerIntvNbr = setInterval(() => {
                         this.playPictureAnimation(this.IMG_DEAD);
                         if (this.y > 500) {
                             this.gameover("lose");
@@ -172,8 +176,8 @@ class Character extends MovableObject {
             else if (this.isAboveGround() && !this.isDeath) {
                 if (this.currentAnimation !== "JUMPING") {
                     this.currentAnimation = "JUMPING";
-                    clearInterval(this.animationTimer);
-                    this.animationTimer = setInterval(() => {
+                    clearInterval(this.animationTimerIntvNbr);
+                    this.animationTimerIntvNbr = setInterval(() => {
                         this.playPictureAnimation(this.IMG_JUMPING);
                         this.timeSinceLastAction = performance.now();
                     }, 110);
@@ -182,8 +186,8 @@ class Character extends MovableObject {
             else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isDeath) {
                 if (this.currentAnimation !== "WALKING") {
                     this.currentAnimation = "WALKING";
-                    clearInterval(this.animationTimer);
-                    this.animationTimer = setInterval(() => {
+                    clearInterval(this.animationTimerIntvNbr);
+                    this.animationTimerIntvNbr = setInterval(() => {
                         this.playPictureAnimation(this.IMG_WALKING);
                         this.timeSinceLastAction = performance.now();
                     }, 100);
@@ -192,8 +196,8 @@ class Character extends MovableObject {
             else if (this.isUnderGround() && this.isTimeForLongIdle(this.timeSinceLastAction) && !this.isDeath) {
                 if (this.currentAnimation !== "LONGIDLE") {
                     this.currentAnimation = "LONGIDLE";
-                    clearInterval(this.animationTimer);
-                    this.animationTimer = setInterval(() => {
+                    clearInterval(this.animationTimerIntvNbr);
+                    this.animationTimerIntvNbr = setInterval(() => {
                         this.playPictureAnimation(this.IMG_LONGIDLE);
                     }, 500);
                 }
@@ -201,8 +205,8 @@ class Character extends MovableObject {
             else if (this.isUnderGround() && !this.isDeath) {
                 if (this.currentAnimation !== "IDLE") {
                     this.currentAnimation = "IDLE";
-                    clearInterval(this.animationTimer);
-                    this.animationTimer = setInterval(() => {
+                    clearInterval(this.animationTimerIntvNbr);
+                    this.animationTimerIntvNbr = setInterval(() => {
                         this.playPictureAnimation(this.IMG_IDLE);
                     }, 300);
                 }

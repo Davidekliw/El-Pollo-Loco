@@ -8,16 +8,31 @@ const output = document.getElementById("heavinessSliderValue");
 
 checkDevice();
 checkTouchDevice();
+
+/**
+ * is used to update html elements if the window screensize change
+ */
 window.addEventListener("resize", () => {
     checkDevice();
     checkTouchDevice();
 });
 
+/**
+ * is used to set the right heaviness value from local storage
+ */
 if (rewardsNeededToGetEndboss !== null) {
     document.getElementById("heavinessSlider").value = rewardsNeededToGetEndboss;
     updateSlider();
 }
 
+/**
+ * is used to stop contextMenu or long touch events
+ */
+document.addEventListener("contextmenu", (e) => e.preventDefault());
+
+/**
+ * is used to update the heavinessSlider in index.html Site
+ */
 slider.addEventListener("input", updateSlider);
 
 /**
@@ -29,6 +44,9 @@ function updateSlider() {
     localStorage.setItem("heaviness", rewardsNeededToGetEndboss);
 }
 
+/**
+ * is used to check for touch device and set touchbuttons on or off
+ */
 function checkTouchDevice() {
     let bottomContainer = document.getElementById('btnContainerBottom')
     if (window.matchMedia("(pointer: coarse)").matches) {
@@ -142,8 +160,6 @@ function toggleFullScreen() {
  * is used to translate touch events into keyboard events
  */
 document.addEventListener("DOMContentLoaded", () => {
-    document.addEventListener("contextmenu", (e) => e.preventDefault());
-
     document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
         e.preventDefault();
         keyboard.LEFT = true;

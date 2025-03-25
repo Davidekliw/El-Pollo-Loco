@@ -4,14 +4,13 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 2.5;
-    testzaehler;
 
     constructor() {
         super();
     }
 
     applyGravity() {
-        this.gravityInterval = setInterval(() => {
+        let gravityInterval = setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;

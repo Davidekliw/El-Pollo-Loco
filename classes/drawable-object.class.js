@@ -73,24 +73,10 @@ class DrawableObject {
         }
     }
 
-    drawXLine(ctx) {
-        if (this instanceof Character) {
-            ctx.font = "18px Arial";
-            ctx.fillStyle = "pink";
-            ctx.lineWidth = '1';
-            ctx.strokeStyle = 'red';
-            ctx.rect(10, 10, 3, 3);
-            ctx.moveTo(this.x - 100, 2)
-            ctx.lineTo(this.x + 500, 2);
-            ctx.fillText(this.x, this.x + 500, 20);
-            ctx.moveTo(this.x - 50, 0)
-            ctx.lineTo(0, 400);
-            ctx.fillText(this.y, this.x, this.y);
-            ctx.stroke();
-            ctx.beginPath();
-        }
-    }
-
+    /**
+    * is used to draw a red dot on top right corner and coordinates of the object
+    * @param {Object} ctx - the used canvas element
+    */
     drawDotTopRight(ctx) {
         if (this instanceof Character || this instanceof Endboss || this instanceof ThrowableObject) {
             ctx.lineWidth = '1';
