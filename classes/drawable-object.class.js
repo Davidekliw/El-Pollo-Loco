@@ -1,25 +1,44 @@
 class DrawableObject {
 
+
+    /**
+    * @param {number} x - is the default x koordinate
+    * @param {number} y - is the default y koordinate
+    * @param {number} width - is the default width
+    * @param {number} height - is the default height
+    * @param {string} img - the current loaded image object
+    * @param {Object} imageCache - the object array which includes the picture instances
+    * @param {number} currentImage - the counter of the current loaded imagepath
+    */
     x = 0;
     y = 0;
-    img;
-    height = 150;
     width = 100;
+    height = 150;
+    img;
     imageCache = {};
     currentImage = 0;
 
-
+    /**
+    * the function is used to draw a object to the canvas
+    * @param {Object} ctx - the used canvas element
+    */
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
-
+    /**
+    * is used to create a picture instances to the loaded path 
+    * @param {string} path -  the source path to a image
+    */
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
     }
 
-
+    /**
+     * is used to create a picture instance for all the paths in the array and push them to the cache
+     * @param {Array} arr - Array with source path for images
+     */
     loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();
@@ -28,7 +47,10 @@ class DrawableObject {
         });
     }
 
-
+    /**
+    * is used to draw a blue frame around the object to show the outline limits of the object 
+    * @param {Object} ctx - the used canvas element
+    */
     drawFrame(ctx) {
         if (this instanceof Character || this instanceof Endboss) {
             ctx.lineWidth = '1';
@@ -39,6 +61,10 @@ class DrawableObject {
         }
     }
 
+    /**
+    * is used to draw a green frame around the object to show the collision area of the object 
+    * @param {Object} ctx - the used canvas element
+    */
     drawCollidingFrame(ctx) {
         if (this instanceof Character || this instanceof Endboss) {
             ctx.lineWidth = '1';
@@ -49,6 +75,10 @@ class DrawableObject {
         }
     }
 
+    /**
+    * is used to draw a yellow dot on top left corner of the object to show the top left corner of the object 
+    * @param {Object} ctx - the used canvas element
+    */
     drawDotTopLeft(ctx) {
         if (this instanceof Character || this instanceof Chicken || this instanceof ThrowableObject || this instanceof Reward || this instanceof Endboss) {
             ctx.lineWidth = '1';
@@ -58,6 +88,10 @@ class DrawableObject {
         }
     }
 
+    /**
+    * is used to draw coordinates of the object. is used to develop situations 
+    * @param {Object} ctx - the used canvas element
+    */
     drawText(ctx) {
         if (this instanceof Character) {
             ctx.font = "18px Arial";
@@ -90,6 +124,10 @@ class DrawableObject {
         }
     }
 
+    /**
+    * is used to draw a blue dot on bottom left corner and coordinates of the object
+    * @param {Object} ctx - the used canvas element
+    */
     drawDotBottomLeft(ctx) {
         if (this instanceof Reward || this instanceof Endboss) {
             ctx.lineWidth = '1';
@@ -103,7 +141,11 @@ class DrawableObject {
         }
     }
 
-
+    /**
+    * is used to set the right picture stack
+    * @param {number} percentage - value between 0 and 100
+    * @param {string} link - the name of the used picture array 
+    */
     setPercentage(percentage, link) {
         let path;
         if (link == "IMG_STATUSBARHEALTH") {
@@ -124,6 +166,11 @@ class DrawableObject {
         }
     }
 
+    /**
+    * is used to set the current value(condition) to the right range
+    * @param {number} condition - a number between 0 and 100
+    * @returns 
+    */
     getRightPicture(condition) {
         if (condition >= 90) {
             return 5;
