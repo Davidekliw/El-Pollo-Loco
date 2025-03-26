@@ -224,9 +224,9 @@ class Character extends MovableObject {
         }
     };
 
-/**
- * is used to handle the character interactions. like jump move left or right
- */
+    /**
+    * is used to handle the character animations. like jump move left or right
+    */
     animateCharacter() {
         setInterval(() => {
             if (keyboard.RIGHT && this.x < this.max_XPosition) {
