@@ -23,13 +23,10 @@ class MovableObject extends DrawableObject {
     * is used to generate an gravity that bring back the object to the Ground
     */
     applyGravity() {
-        let gravityInterval = setInterval(() => {
+        setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
-            }
-            else {
-                world.clearInterval(gravityInterval);
             }
         }, 1000 / 25);
     }
@@ -118,7 +115,7 @@ class MovableObject extends DrawableObject {
     * @returns true if a object is above or false
     */
     characterIsAboveEnemy(obj) {
-        if (this.y + this.height < obj.y && this.x + this.width > obj.x && this.x < obj.x + obj.width) {
+        if (this.y + this.height < obj.y && this.x + this.collidingFrameWidth > obj.x + obj.collidingFramex && this.x + this.collidingFramex < obj.x + obj.collidingFrameWidth) {
             return true;
         } else {
             return false;
@@ -139,11 +136,11 @@ class MovableObject extends DrawableObject {
     }
 
     /**
-    * is used to generate a random point between the min and max value to use as x coordinate
-    * @param {number} minXCoordinate - the minimum coordinate for the possible spawn point range
-    * @param {number} maxXCoordinate - the maximum coordinate for the possible spawn point range
-    * @returns {number} - a x coordinate
-    */
+     * is used to generate a random point between the min and max value to use as x coordinate
+     * @param {number} minXCoordinate - the minimum coordinate for the possible spawn point range
+     * @param {number} maxXCoordinate - the maximum coordinate for the possible spawn point range
+     * @returns {number} - a x coordinate
+     */
     generateSpawnPointX(minXCoordinate, maxXCoordinate) {
         let generateXCoordinate = Math.random() * maxXCoordinate + this.minXDistance;
         if (generateXCoordinate < maxXCoordinate && generateXCoordinate > minXCoordinate) {
@@ -171,10 +168,10 @@ class MovableObject extends DrawableObject {
     }
 
     /**
-     * is used to handle a hit on a enemy
-     * @param {number} damage - the hight of the points to subtracted from the live
-     * @param {number} index - is the current index of the object which is currently attacking
-     */
+    * is used to handle a hit on a enemy
+    * @param {number} damage - the hight of the points to subtracted from the live
+    * @param {number} index - is the current index of the object which is currently attacking
+    */
     getDamage(damage, index) {
         world.level.enemies[index].live -= damage;
         if (!this.isEnoughLive()) {
