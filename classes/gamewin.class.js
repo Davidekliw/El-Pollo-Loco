@@ -34,6 +34,7 @@ class GameWin extends MovableObject {
         setTimeout(() => {
             cancelAnimationFrame(world.gameLoopInt);
             world.clearAllIntervals();
+            setKeyboardToFalse();
             pauseAllSounds();
             init(++levelNbr);
         }, 1500);

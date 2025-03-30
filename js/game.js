@@ -231,3 +231,10 @@ document.addEventListener('keyup', (event) => {
         keyboard.KEYD = false;
     }
 });
+
+function setKeyboardToFalse() {
+    keyboard.LEFT = false;
+    keyboard.RIGHT = false;
+    keyboard.SPACE = false;
+    keyboard.KEYD = false;
+}

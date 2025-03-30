@@ -36,7 +36,7 @@ class GameOver extends MovableObject {
             pauseAllSounds();
             this.showGameOverInterface();
             this.clearCanvas();
-            console.log(keyboard);
+            setKeyboardToFalse();
         }, 2000);
     }
 
