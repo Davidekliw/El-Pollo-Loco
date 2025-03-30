@@ -189,4 +189,16 @@ class MovableObject extends DrawableObject {
             playSound('chickenHitSound');
         }
     }
+
+    /**
+    * is used to remove the enemy from the enemy array if them is outside the Playground
+    */
+    removeChickenOnOutsiteOfGame() {
+        this.playPictureAnimation(this.IMG_WALKING);
+        if (this.x < -50) {
+            let index = world.level.enemies.findIndex(enemy => enemy.chickenInt === this.chickenInt)
+            world.level.enemies.splice(index, 1);
+            window.clearInterval(this.chickenInt);
+        }
+    }
 }

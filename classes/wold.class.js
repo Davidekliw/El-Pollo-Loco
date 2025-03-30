@@ -32,6 +32,9 @@ class World {
         }, 1000);
     }
 
+    /**
+    * is used to start the Background music if the sound is set to on
+    */
     backgroundSoundLoop() {
         if (soundEnabled && soundsLib['backgroundMusic'].paused) {
             playSound('backgroundMusic');
@@ -44,6 +47,9 @@ class World {
         }, 1000);
     }
 
+    /**
+    * is used to start the game loop animation
+    */
     startGameLoop() {
         if (this.gameLoopInt) {
             cancelAnimationFrame(this.gameLoopInt);
@@ -56,23 +62,37 @@ class World {
         this.gameLoopInt = requestAnimationFrame(loop);
     }
 
+    /**
+    * is used to clear all opened intervals 
+    */
     clearAllIntervals() {
         for (let i = 1; i < 9999; i++) {
             window.clearInterval(i);
         }
     }
 
+    /**
+    * Sets the world reference for the character and the last enemy in the level.
+    * This method ensures that both the character and the last enemy in the `level.enemies` array have access to the current world.
+    */
     setWorld() {
         this.character.world = this;
         this.level.enemies[this.level.enemies.length - 1].world = this;
     }
 
+    /**
+    * is used to update other functions
+    */
     update() {
         this.throwableObject();
         !this.character.isDeath && this.checkHitEnemyFromAbove();
         !this.character.isDeath && this.checkObjectCollisions();
     };
 
+
+    /**
+    * is used to throw a object
+    */
     throwableObject() {
         if (this.keyboard.KEYD && world?.bottleBar?.currentLoad > 0 && !world?.character?.isDeath) {
             if (this.throwableObjects.length == 0) {
@@ -156,12 +176,20 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
     }
 
+    /**
+    * is used to load all Objects in the array
+    * @param {Array} objects - Objects as a Array
+    */
     addObjectsToMap(objects) {
         objects.forEach(object => {
             this.addToMap(object);
         });
     }
 
+    /**
+    * is used to load the current Object and set the right direction
+    * @param {Object} mo - the current Object
+    */
     addToMap(mo) {
         if (mo.otherDirection) {
             this.flipImage(mo);
@@ -172,6 +200,10 @@ class World {
         }
     }
 
+    /**
+    * is used to mirror the current Object
+    * @param {Object} mo - the current Object
+    */
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
@@ -179,13 +211,19 @@ class World {
         mo.x = mo.x * -1;
     }
 
+    /**
+    * is used to mirror back the current Object
+    * @param {Object} mo - the current Object
+    */
     flipBackImage(mo) {
         mo.x = mo.x * -1;
         this.ctx.scale(-1, 1);
         this.ctx.restore();
     }
 
-
+    /**
+    * is used to calculate the result of all coins in the level
+    */
     coinCounter() {
         let coinsArray = this.level.rewards.filter(reward => reward instanceof Coin);
         this.allCoinsInLevel = coinsArray.length * 10;
@@ -194,6 +232,9 @@ class World {
         }
     }
 
+    /**
+    * is used to calculate the result of all bottles in the level
+    */
     bottleCounter() {
         let bottleArray = this.level.rewards.filter(reward => reward instanceof Bottle);
         this.allBottlesInLevel = bottleArray.length * 10;

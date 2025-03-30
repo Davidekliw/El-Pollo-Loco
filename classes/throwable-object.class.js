@@ -1,16 +1,44 @@
 class ThrowableObject extends MovableObject {
 
-
+    /**
+    * default width and height of the element.
+    * @param {number} width - is the default width
+    * @param {number} height - is the default height
+    */
     width = 60;
     height = 80;
+
+    /**
+    * is used to limit the contact area
+    * @param {number} collidingFramex- is the default colliding x koordinate
+    * @param {number} collidingFramey- is the default colliding y koordinate
+    * @param {number} collidingFrameWidth- is the default colliding height koordinate
+    * @param {number} collidingFrameHight- is the default colliding width koordinate
+    */
     collidingFramex = 15;
     collidingFramey = 15;
     collidingFrameWidth = 45;
     collidingFrameHight = 70;
+
+    /**
+    * @param {number} throwableObjectIntv - represent the intervalnumber of a throw object
+    */
     throwableObjectIntv;
+
+    /**
+    * @param {boolean} isUsed - is set to true if a botttle hit a enemy the first time.
+    */
     isUsed = false;
+
+    /**
+    * @param {number} splashIntv - represent the intervalnumber of a colliding throw object
+    */
     splashIntv;
 
+    /**
+    * A Array with the Picturepath´s for a bottle on fly.
+    * @type {string[]}
+    */
     IMG_BOTTLES = [
         './img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         './img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
@@ -18,6 +46,10 @@ class ThrowableObject extends MovableObject {
         './img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png'
     ];
 
+    /**
+    * A Array with the Picturepath´s for a bottle is colliding a object.
+    * @type {string[]}
+    */
     IMG_BOTTLEHIT = [
         './img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png',
         './img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png',
@@ -39,11 +71,9 @@ class ThrowableObject extends MovableObject {
         this.throw();
     }
 
-    loadImage(path) {
-        this.img = new Image();
-        this.img.src = path;
-    }
-
+    /**
+     * is used to show  bottle explode
+     */
     splashBottle() {
         window.clearInterval(this.throwableObjectIntv);
         this.splashIntv = setInterval(() => {
@@ -55,6 +85,9 @@ class ThrowableObject extends MovableObject {
         }, 4000);
     }
 
+    /**
+     * is used to check if the thrown element has hit another object
+     */
     checkBottleCollision() {
         world.level.enemies.forEach((enemy, index) => {
             let hit = world.throwableObjects.some((throwableObject) => throwableObject?.isColliding(enemy));
@@ -65,6 +98,10 @@ class ThrowableObject extends MovableObject {
         });
     }
 
+
+    /**
+     * is used to set the throw direction
+     */
     checkThrowDirection() {
         if (world.character.otherDirection) {
             this.throwdirection = -24;
@@ -74,6 +111,10 @@ class ThrowableObject extends MovableObject {
         }
     }
 
+    /**
+     * is used to change the right pictures for use
+     * @returns the right picture Array
+     */
     changeUsedPictures() {
         if (this.isUsed) {
             return this.IMG_BOTTLEHIT;
@@ -83,6 +124,17 @@ class ThrowableObject extends MovableObject {
         }
     }
 
+    /**
+     * is used to calculate and set the right status percentage
+     */
+    updateStatusBar() {
+        world.bottleBar.currentLoad = world.bottleBar.currentLoad - (1 / world.allBottlesInLevel) * 1000;
+        world.bottleBar.setPercentage(world.bottleBar.currentLoad, "IMG_STATUSBARBOTTLES");
+    }
+
+    /**
+     * isd used to throw a object
+     */
     throw() {
         playSound('throwSound');
         this.checkThrowDirection();
@@ -95,8 +147,7 @@ class ThrowableObject extends MovableObject {
             this.applyGravity();
             if (this.y > 500) {
                 world.throwableObjects.splice(0);
-                world.bottleBar.currentLoad = world.bottleBar.currentLoad - (1 / world.allBottlesInLevel) * 1000;
-                world.bottleBar.setPercentage(world.bottleBar.currentLoad, "IMG_STATUSBARBOTTLES");
+                this.updateStatusBar();
                 pauseSound('throwSound');
                 window.clearInterval(this.throwableObjectIntv);
             }
