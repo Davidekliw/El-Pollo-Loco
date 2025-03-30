@@ -250,60 +250,74 @@ class Character extends MovableObject {
     * character is Death Animation
     */
     characterIsDeadAnimation() {
-        this.currentAnimation = "DEAD";
-        clearInterval(this.animationTimerIntvNbr);
-        this.animationTimerIntvNbr = setInterval(() => {
-            this.playPictureAnimation(this.IMG_DEAD);
-            if (this.y > 500) {
-                this.gameover("lose");
-            }
-        }, 300);
+        if (this.currentAnimation !== "DEAD") {
+            this.currentAnimation = "DEAD";
+            clearInterval(this.animationTimerIntvNbr);
+            this.animationTimerIntvNbr = setInterval(() => {
+                this.playPictureAnimation(this.IMG_DEAD);
+                if (this.y > 500) {
+                    this.gameover("lose");
+                }
+            }, 300);
+        }
     }
 
     /**
     * character jumping Animation
     */
     characterDoesAJump() {
-        this.currentAnimation = "JUMPING";
-        clearInterval(this.animationTimerIntvNbr);
-        this.animationTimerIntvNbr = setInterval(() => {
-            this.playPictureAnimation(this.IMG_JUMPING);
-            this.timeSinceLastAction = performance.now();
-        }, 120);
+        if (this.currentAnimation !== "JUMPING") {
+            playSound('characterJump');
+            this.currentAnimation = "JUMPING";
+            clearInterval(this.animationTimerIntvNbr);
+            this.animationTimerIntvNbr = setInterval(() => {
+                this.playPictureAnimation(this.IMG_JUMPING);
+                this.timeSinceLastAction = performance.now();
+            }, 100);
+            setTimeout(() => {
+                this.currentOnJump = false;
+            }, 1000);
+        }
     }
 
     /**
     * character walking Animation
     */
     characterIsOnWalking() {
-        this.currentAnimation = "WALKING";
-        clearInterval(this.animationTimerIntvNbr);
-        this.animationTimerIntvNbr = setInterval(() => {
-            this.playPictureAnimation(this.IMG_WALKING);
-            this.timeSinceLastAction = performance.now();
-        }, 100);
+        if (this.currentAnimation !== "WALKING" && !this.currentOnJump) {
+            this.currentAnimation = "WALKING";
+            clearInterval(this.animationTimerIntvNbr);
+            this.animationTimerIntvNbr = setInterval(() => {
+                this.playPictureAnimation(this.IMG_WALKING);
+                this.timeSinceLastAction = performance.now();
+            }, 120);
+        }
     }
 
     /**
     * character LongIdle Animation
     */
     characterIsOnLongIdle() {
-        this.currentAnimation = "LONGIDLE";
-        clearInterval(this.animationTimerIntvNbr);
-        this.animationTimerIntvNbr = setInterval(() => {
-            this.playPictureAnimation(this.IMG_LONGIDLE);
-        }, 500);
+        if (this.currentAnimation !== "LONGIDLE") {
+            this.currentAnimation = "LONGIDLE";
+            clearInterval(this.animationTimerIntvNbr);
+            this.animationTimerIntvNbr = setInterval(() => {
+                this.playPictureAnimation(this.IMG_LONGIDLE);
+            }, 350);
+        }
     }
 
     /**
     * character is on Idle Animation
     */
     characterIsOnIdle() {
-        this.currentAnimation = "IDLE";
-        clearInterval(this.animationTimerIntvNbr);
-        this.animationTimerIntvNbr = setInterval(() => {
-            this.playPictureAnimation(this.IMG_IDLE);
-        }, 300);
+        if (this.currentAnimation !== "IDLE") {
+            this.currentAnimation = "IDLE";
+            clearInterval(this.animationTimerIntvNbr);
+            this.animationTimerIntvNbr = setInterval(() => {
+                this.playPictureAnimation(this.IMG_IDLE);
+            }, 200);
+        }
     }
 
     /**
@@ -312,39 +326,29 @@ class Character extends MovableObject {
     animateCharacter() {
         setInterval(() => {
             this.moveCamera();
-            if (keyboard.RIGHT && this.x < this.max_XPosition) {
-                this.characterGoesToRight();
-            }
-            if (keyboard.LEFT && !this.isDeath && this.x > this.min_XPosition) {
-                this.characterGoesToLeft();
-            }
-            if (keyboard.SPACE && !this.isAboveGround()) {
-                playSound('characterJump');
-                this.jump();
-                keyboard.SPACE = false;
-            }
             if (!this.isEnoughLive()) {
-                if (this.currentAnimation !== "DEAD") {
-                    this.characterIsDeadAnimation();
-                }
+                this.characterIsDeadAnimation();
             }
-            else if (this.isAboveGround() && !this.isDeath) {
-                if (this.currentAnimation !== "JUMPING") {
+            else {
+                if (keyboard.SPACE && !this.isAboveGround()) {
+                    this.currentOnJump = true;
+                    this.jump();
                     this.characterDoesAJump();
                 }
-            }
-            else if ((keyboard.RIGHT || keyboard.LEFT) && !this.isDeath) {
-                if (this.currentAnimation !== "WALKING") {
+                else if (keyboard.LEFT && this.x > this.min_XPosition) {
+                    this.characterGoesToLeft();
                     this.characterIsOnWalking();
+                    keyboard.RIGHT = false;
                 }
-            }
-            else if (this.isUnderGround() && this.isTimeForLongIdle(this.timeSinceLastAction) && !this.isDeath) {
-                if (this.currentAnimation !== "LONGIDLE") {
+                else if (keyboard.RIGHT && this.x < this.max_XPosition) {
+                    this.characterGoesToRight();
+                    this.characterIsOnWalking();
+                    keyboard.LEFT = false;
+                }
+                else if (!keyboard.RIGHT && !keyboard.LEFT && this.isUnderGround() && this.isTimeForLongIdle(this.timeSinceLastAction)) {
                     this.characterIsOnLongIdle();
                 }
-            }
-            else if (this.isUnderGround() && !this.isDeath) {
-                if (this.currentAnimation !== "IDLE") {
+                else if (!keyboard.RIGHT && !keyboard.LEFT && this.isUnderGround()) {
                     this.characterIsOnIdle();
                 }
             }
