@@ -169,7 +169,7 @@ class DrawableObject {
     /**
     * is used to set the current value(condition) to the right range
     * @param {number} condition - a number between 0 and 100
-    * @returns 
+    * @returns returns a number from 5/4/3/2/1/0 to set the right picture
     */
     getRightPicture(condition) {
         if (condition >= 90) {

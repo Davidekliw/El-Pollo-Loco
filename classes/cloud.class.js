@@ -9,7 +9,7 @@ class Cloud extends MovableObject {
     width = 550;
 
     /**
-     * @type {number} minXDistance - min distance between 2 objects
+     * @param {number} minXDistance - min distance between 2 objects
      */
     minXDistance = 500;
 
