@@ -1,4 +1,5 @@
 class World {
+
     gameLoopInt;
     character = new Character();
     level = currentLevel;
@@ -103,18 +104,30 @@ class World {
         }
     }
 
+    /**
+    * is used to handle the action if the character hit a enemy from above
+    * @param {object} obj - the current object
+    * @param {number} index - the index in enemy array of the current object
+    */
+    handleHitFromAbove(obj, index) {
+        obj.hitIsInProgress = true;
+        if (!this.character?.isDeath && this.character.isColliding(obj)) {
+            obj.getDamage(obj.live, index);
+            obj.hitIsInProgress = false;
+        }
+        else if (!this.character.isAboveGround()) {
+            obj.hitIsInProgress = false;
+        }
+    }
+
+    /**
+    * is used to check whether the caracter hints from above the enemy
+    */
     checkHitEnemyFromAbove() {
         this.level.enemies.forEach((obj, index) => {
             this.isAboveEnemy = this.character.characterIsAboveEnemy(obj);
             if (!obj.isDeath && this.isAboveEnemy || obj.hitIsInProgress) {
-                obj.hitIsInProgress = true;
-                if (!this.character?.isDeath && this.character.isColliding(obj)) {
-                    obj.getDamage(obj.live, index);
-                    obj.hitIsInProgress = false;
-                }
-                else if (!this.character.isAboveGround()) {
-                    obj.hitIsInProgress = false;
-                }
+                this.handleHitFromAbove(obj, index);
             }
             else if (!obj.hitIsInProgress && obj.live > 0 && !this.character?.isDeath && this.character.isColliding(obj)) {
                 this.character.getDamage(obj.makeDamage);
@@ -123,19 +136,37 @@ class World {
         });
     }
 
+
+    /**
+    * is used to play sound, calculate statusbar Progress and update Bottlebar
+    */
+    collectABottle(index) {
+        pauseSound('bottleSound');
+        playSound('bottleSound');
+        this.bottleBar.currentLoad = this.bottleBar.currentLoad + this.level.rewards[index].value
+        this.bottleBar.setPercentage(this.bottleBar.currentLoad, "IMG_STATUSBARBOTTLES");
+    }
+
+    /**
+    * is used to play sound, calculate statusbar Progress and update Coinbar
+    */
+    collectACoin() {
+        pauseSound('coinSound');
+        playSound('coinSound');
+        this.coinBar.currentLoad = this.coinBar.currentLoad + (1 / this.allCoinsInLevel) * 1000
+        this.coinBar.setPercentage(this.coinBar.currentLoad, "IMG_STATUSBARCOINS");
+    }
+
+    /**
+    * is used to check whether the character colliding a reward
+    */
     checkObjectCollisions() {
         this.level.rewards.forEach((obj, index) => {
             if (this.character.isColliding(obj)) {
                 if (this.level.rewards[index] instanceof Bottle) {
-                    pauseSound('bottleSound');
-                    playSound('bottleSound');
-                    this.bottleBar.currentLoad = this.bottleBar.currentLoad + this.level.rewards[index].value
-                    this.bottleBar.setPercentage(this.bottleBar.currentLoad, "IMG_STATUSBARBOTTLES");
+                    this.collectABottle(index);
                 } else if (this.level.rewards[index] instanceof Coin) {
-                    pauseSound('coinSound');
-                    playSound('coinSound');
-                    this.coinBar.currentLoad = this.coinBar.currentLoad + (1 / this.allCoinsInLevel) * 1000
-                    this.coinBar.setPercentage(this.coinBar.currentLoad, "IMG_STATUSBARCOINS");
+                    this.collectACoin();
                 } else {
                     console.error(index, 'ist nicht wie erwartet');
                 }
@@ -144,23 +175,24 @@ class World {
         });
     }
 
-
+    /**
+    * is used to draw all objects in the game
+    */
     draw() {
+        const mapObjects = [
+            this.level.backgroundObjs,
+            this.level.enemies.filter(enemy => enemy.isDeath === false),
+            this.level.clouds,
+            this.throwableObjects,
+            this.level.rewards
+        ];
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
         this.ctx.translate(this.camera_x, 0);
 
-        this.addObjectsToMap(this.level.backgroundObjs);
-
-        this.addObjectsToMap(this.level.enemies.filter(enemy => enemy.isDeath === false));
-
-        this.addObjectsToMap(this.level.clouds);
-
-        this.addObjectsToMap(this.throwableObjects);
-
-        this.addObjectsToMap(this.level.rewards);
+        mapObjects.forEach(obj => this.addObjectsToMap(obj));
 
         this.ctx.translate(-this.camera_x, 0);
+
         this.addToMap(this.healthBar);
         this.addToMap(this.bottleBar);
         this.addToMap(this.coinBar);
@@ -173,6 +205,7 @@ class World {
         if (this.gameover instanceof GameOver || this.gameover instanceof GameWin) {
             this.addToMap(this.gameover);
         }
+
         this.ctx.translate(-this.camera_x, 0);
     }
 

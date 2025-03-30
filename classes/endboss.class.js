@@ -168,6 +168,42 @@ class Endboss extends MovableObject {
     }
 
     /**
+    * is used to handle if the bos is down. Play death animation, Stop intervals and load the win screen
+    * @param {number} index - index of the endboss.
+    */
+    bossIsDown(index) {
+        pauseSound('bossSound');
+        pauseSound('attackBossSound');
+        playSound('deadBossSound');
+        window.clearInterval(this.currentIntv);
+        this.currentIntv = setInterval(() => {
+            this.playPictureAnimation(this.IMG_DEAD);
+        }, 200);
+        setTimeout(() => {
+            world.level.enemies.splice(index, 1);
+            window.clearInterval(this.currentIntv);
+            this.world.character.gameover("win");
+        }, 2000);
+    }
+
+    /**
+    * is used to handle if the boss get a hit. show hurting pictures, play sound and close intervals
+    */
+    bossGetAHit() {
+        playSound('chickenHitSound');
+        this.currentIntv = setInterval(() => {
+            this.playPictureAnimation(this.IMG_HURT);
+        }, 200);
+        setTimeout(() => {
+            window.clearInterval(this.currentIntv);
+            this.getAHit = false;
+            this.loadImage(this.IMG_WALKING[1]);
+            pauseSound('chickenHitSound');
+            this.startBossAttack();
+        }, 680);
+    }
+
+    /**
     * is used to substract the damage points from Endboss live.
     * start the hurt or the death animation for the Endboss.
     * or set the death Variable to true 
@@ -182,31 +218,9 @@ class Endboss extends MovableObject {
         window.clearInterval(this.currentIntv);
         window.clearTimeout(this.timeOutIntv);
         if (!this.isEnoughLive()) {
-            pauseSound('bossSound');
-            pauseSound('attackBossSound');
-            playSound('deadBossSound');
-            window.clearInterval(this.currentIntv);
-            this.currentIntv = setInterval(() => {
-                this.playPictureAnimation(this.IMG_DEAD);
-            }, 200);
-            setTimeout(() => {
-                world.level.enemies.splice(index, 1);
-                window.clearInterval(this.currentIntv);
-                this.world.character.gameover("win");
-            }, 2000);
+            this.bossIsDown(index);
         } else {
-            playSound('chickenHitSound');
-            this.currentIntv = setInterval(() => {
-                this.playPictureAnimation(this.IMG_HURT);
-            }, 200);
-
-            setTimeout(() => {
-                window.clearInterval(this.currentIntv);
-                this.getAHit = false;
-                this.loadImage(this.IMG_WALKING[1]);
-                pauseSound('chickenHitSound');
-                this.startBossAttack();
-            }, 680);
+            this.bossGetAHit();
         }
     }
 
@@ -267,18 +281,25 @@ class Endboss extends MovableObject {
     }
 
     /**
+    * is used to stop the move back Interval and start a move to left interval
+    */
+    stopMoveBackStartMoveLeft() {
+        window.clearInterval(this.currentIntv);
+        this.loadImage(this.IMG_WALKING[1]);
+        this.otherDirection = false;
+        this.spawnBottle(this.world.level.level_end_x - 150, 320);
+        this.timeOutIntv = setTimeout(() => {
+            this.moveToLeft();
+        }, 1500);
+    }
+
+    /**
     * is used to move the Endboss back to the startpoint on right site of playground
     */
     moveBack() {
         this.currentIntv = setInterval(() => {
             if (this.x > this.world.level.level_end_x) {
-                window.clearInterval(this.currentIntv);
-                this.loadImage(this.IMG_WALKING[1]);
-                this.otherDirection = false;
-                this.spawnBottle(this.world.level.level_end_x - 150, 320);
-                this.timeOutIntv = setTimeout(() => {
-                    this.moveToLeft();
-                }, 1500);
+                this.stopMoveBackStartMoveLeft();
             }
             else if (this.getAHit) {
                 window.clearInterval(this.currentIntv);

@@ -225,25 +225,99 @@ class Character extends MovableObject {
     };
 
     /**
+    * is used to move the character to the right and play the walking sound
+    */
+    characterGoesToRight() {
+        this.moveRight();
+        this.otherDirection = false;
+        if (!this.isAboveGround()) {
+            playSound('characterWalking');
+        }
+    }
+
+    /**
+    * is used to move the character to the left and play the walking sound
+    */
+    characterGoesToLeft() {
+        this.moveLeft();
+        this.otherDirection = true;
+        if (!this.isAboveGround()) {
+            playSound('characterWalking');
+        }
+    }
+
+    /**
+    * character is Death Animation
+    */
+    characterIsDeadAnimation() {
+        this.currentAnimation = "DEAD";
+        clearInterval(this.animationTimerIntvNbr);
+        this.animationTimerIntvNbr = setInterval(() => {
+            this.playPictureAnimation(this.IMG_DEAD);
+            if (this.y > 500) {
+                this.gameover("lose");
+            }
+        }, 300);
+    }
+
+    /**
+    * character jumping Animation
+    */
+    characterDoesAJump() {
+        this.currentAnimation = "JUMPING";
+        clearInterval(this.animationTimerIntvNbr);
+        this.animationTimerIntvNbr = setInterval(() => {
+            this.playPictureAnimation(this.IMG_JUMPING);
+            this.timeSinceLastAction = performance.now();
+        }, 120);
+    }
+
+    /**
+    * character walking Animation
+    */
+    characterIsOnWalking() {
+        this.currentAnimation = "WALKING";
+        clearInterval(this.animationTimerIntvNbr);
+        this.animationTimerIntvNbr = setInterval(() => {
+            this.playPictureAnimation(this.IMG_WALKING);
+            this.timeSinceLastAction = performance.now();
+        }, 100);
+    }
+
+    /**
+    * character LongIdle Animation
+    */
+    characterIsOnLongIdle() {
+        this.currentAnimation = "LONGIDLE";
+        clearInterval(this.animationTimerIntvNbr);
+        this.animationTimerIntvNbr = setInterval(() => {
+            this.playPictureAnimation(this.IMG_LONGIDLE);
+        }, 500);
+    }
+
+    /**
+    * character is on Idle Animation
+    */
+    characterIsOnIdle() {
+        this.currentAnimation = "IDLE";
+        clearInterval(this.animationTimerIntvNbr);
+        this.animationTimerIntvNbr = setInterval(() => {
+            this.playPictureAnimation(this.IMG_IDLE);
+        }, 300);
+    }
+
+    /**
     * is used to handle the character animations. like jump move left or right
     */
     animateCharacter() {
         setInterval(() => {
+            this.moveCamera();
             if (keyboard.RIGHT && this.x < this.max_XPosition) {
-                this.moveRight();
-                this.otherDirection = false;
-                if (!this.isAboveGround()) {
-                    playSound('characterWalking');
-                }
+                this.characterGoesToRight();
             }
             if (keyboard.LEFT && !this.isDeath && this.x > this.min_XPosition) {
-                this.moveLeft();
-                this.otherDirection = true;
-                if (!this.isAboveGround()) {
-                    playSound('characterWalking');
-                }
+                this.characterGoesToLeft();
             }
-            this.moveCamera();
             if (keyboard.SPACE && !this.isAboveGround()) {
                 playSound('characterJump');
                 this.jump();
@@ -251,53 +325,27 @@ class Character extends MovableObject {
             }
             if (!this.isEnoughLive()) {
                 if (this.currentAnimation !== "DEAD") {
-                    this.currentAnimation = "DEAD";
-                    clearInterval(this.animationTimerIntvNbr);
-                    this.animationTimerIntvNbr = setInterval(() => {
-                        this.playPictureAnimation(this.IMG_DEAD);
-                        if (this.y > 500) {
-                            this.gameover("lose");
-                        }
-                    }, 300);
+                    this.characterIsDeadAnimation();
                 }
-                return;
             }
             else if (this.isAboveGround() && !this.isDeath) {
                 if (this.currentAnimation !== "JUMPING") {
-                    this.currentAnimation = "JUMPING";
-                    clearInterval(this.animationTimerIntvNbr);
-                    this.animationTimerIntvNbr = setInterval(() => {
-                        this.playPictureAnimation(this.IMG_JUMPING);
-                        this.timeSinceLastAction = performance.now();
-                    }, 110);
+                    this.characterDoesAJump();
                 }
             }
-            else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isDeath) {
+            else if ((keyboard.RIGHT || keyboard.LEFT) && !this.isDeath) {
                 if (this.currentAnimation !== "WALKING") {
-                    this.currentAnimation = "WALKING";
-                    clearInterval(this.animationTimerIntvNbr);
-                    this.animationTimerIntvNbr = setInterval(() => {
-                        this.playPictureAnimation(this.IMG_WALKING);
-                        this.timeSinceLastAction = performance.now();
-                    }, 100);
+                    this.characterIsOnWalking();
                 }
             }
             else if (this.isUnderGround() && this.isTimeForLongIdle(this.timeSinceLastAction) && !this.isDeath) {
                 if (this.currentAnimation !== "LONGIDLE") {
-                    this.currentAnimation = "LONGIDLE";
-                    clearInterval(this.animationTimerIntvNbr);
-                    this.animationTimerIntvNbr = setInterval(() => {
-                        this.playPictureAnimation(this.IMG_LONGIDLE);
-                    }, 500);
+                    this.characterIsOnLongIdle();
                 }
             }
             else if (this.isUnderGround() && !this.isDeath) {
                 if (this.currentAnimation !== "IDLE") {
-                    this.currentAnimation = "IDLE";
-                    clearInterval(this.animationTimerIntvNbr);
-                    this.animationTimerIntvNbr = setInterval(() => {
-                        this.playPictureAnimation(this.IMG_IDLE);
-                    }, 300);
+                    this.characterIsOnIdle();
                 }
             }
         }, 1000 / 60);
