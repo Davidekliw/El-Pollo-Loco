@@ -35,7 +35,7 @@ class SmallChicken extends MovableObject {
     /**
      * @param {number} - set the damage that the enemy make to other. exampl. character.
      */
-    makeDamage = 2;
+    makeDamage = 1;
 
     /**
     * @param {number} - is used to set the live Points of the character.

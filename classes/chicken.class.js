@@ -35,7 +35,7 @@ class Chicken extends MovableObject {
     /**
     * @param {number} - set the damage that the enemy make to other. exampl. character.
     */
-    makeDamage = 1.5;
+    makeDamage = 0.5;
 
     /**
     *
